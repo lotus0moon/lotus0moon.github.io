@@ -1,4 +1,4 @@
 User-agent: *
-Sitemap: https://lotus-moon-0.github.io/sitemap.xml
+Sitemap: https://lotus0moon.github.io/sitemap.xml
 Disallow: /offline.html
 Disallow: /404.html

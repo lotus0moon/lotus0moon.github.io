@@ -6,7 +6,7 @@ favicon: /img/moon.svg
 email: lotus_0_moon@sina.com
 description: '这里是 @荷边赏月 的个人博客，与你一起发现更大的世界 | 要做一个有梦想的人'
 keyword: "荷边赏月, 荷边赏月的博客, 博客, 个人网站, 互联网, Web, JavaScript, 前端, 设计, Lotus Moon's Blog, Lotus Moon"
-url: 'https://lotus-moon-0.github.io' # your host, for absolute URL
+url: 'https://lotus0moon.github.io' # your host, for absolute URL
 baseurl: '' # for example, '/blog' if your blog hosted on 'host/blog'
 
 
@@ -18,7 +18,7 @@ future: true
 RSS: false
 # weibo_username: N/A
 # zhihu_username: N/A
-github_username: Lotus-Moon-0
+github_username: lotus0moon
 # twitter_username: N/A
 # facebook_username:  N/A
 # linkedin_username:  firstname-lastname-idxxxx
@@ -71,19 +71,19 @@ comments: true
 # Gitalk settings
 # 发完 Blog，自己先打开一下，初始化 Gitalk
 gitalk:
-  enable: true
-  clientID: 89dd26d4cc9cc7d512f9
-  clientSecret: 0561201d77372bd5cb5e65de63b0573838153e5f
-  repo: Lotus-Moon-0.github.io
-  owner: Lotus-Moon-0
-  admin: Lotus-Moon-0
+  enable: false
+  clientID: #89dd26d4cc9cc7d512f9
+  clientSecret: #0561201d77372bd5cb5e65de63b0573838153e5f
+  repo: lotus0moon.github.io
+  owner: lotus0moon
+  admin: lotus0moon
   proxy: https://cors-server-ecru.vercel.app/github_access_token
 
 # Valine settings
 valine:
-  enable: true
-  appId: UWb6V29lCon7qUCDRtBZz5Q6-gzGzoHsz
-  appKey: DBJBwVi3DIzNMqgDda09opd7
+  enable: false
+  appId: #UWb6V29lCon7qUCDRtBZz5Q6-gzGzoHsz
+  appKey: #DBJBwVi3DIzNMqgDda09opd7
 # Netease settings
 netease:
   enable: false
@@ -96,7 +96,7 @@ disqus:
 
 # Analytics settings
 # Baidu Analytics
-ba_track_id: dd9761aaf8166618d79b999ab965fd10
+ba_track_id: #dd9761aaf8166618d79b999ab965fd10
 
 # Google Analytics
 # ga_track_id: "UA-49627206-1" # Format: UA-xxxxxx-xx
