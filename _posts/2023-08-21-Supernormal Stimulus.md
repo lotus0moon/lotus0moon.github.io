@@ -19,7 +19,7 @@ Nowadays, more and more people keep cats as their pets. But why is petting these
 ## What is supernormal stimulus?
 
 It is a kind of special (usually artificial) stimuli that can trigger an instinctual response more powerfully than a natural stimuli would. To put it simply, animals are sensitive with certain features. The more obvious these features are, the stronger response these features set off.  
-<a href="https://ibb.co/XxXL5K2"><img src="/img/inPost/SS/supernormal-9.png" alt="supernormal-9" border="0"><span class="img-caption text-muted">How supernormal stimulus effects songbirds.</span></a>
+<a href="https://ibb.co/XxXL5K2"><img class="lazyload" data-src="/img/inPost/SS/supernormal-9.png" alt="supernormal-9" border="0"><span class="img-caption text-muted">How supernormal stimulus effects songbirds.</span></a>
 
 ## Cats Vs. Human Babies
 
@@ -27,10 +27,10 @@ While cats and human babies are different in many ways, the two are similar in t
 
 Since about 10,000 years ago, as a research published in Scientific American<a href="#ref[2]"><sup>[2]</sup></a> shows, the ancestors of modern cats have already shared some facial characteristics with human babies. Ancient cats might evolve big flat round faces and huge sparkling eyes for a better hunting sight. They also got small noses to make sniffing preys easier. Then, they met humans, whose babies looked similar with the cats, instantly activated humans’ instinct of taking care of babies. With the help of the superstimuli, cats started staying with humans and evolving increasingly baby-like.
 
-<div style="text-align:center"><a href="https://ibb.co/Q8VwJdt"><img src="https://i.ibb.co/vsWncYR/cat-sight.jpg" alt="cat-sight" border="0" style="display:inline;margin-bottom:0"></a>
-<a href="https://ibb.co/Nsstxz7"><img src="https://i.ibb.co/c11kJdx/cat-nose.jpg" alt="cat-nose" border="0" style="display:inline;margin-bottom:0"></a></div><span class="img-caption text-muted">Broadened eye sight and wet nose of cats.</span>  
+<div style="text-align:center"><a href="https://ibb.co/Q8VwJdt"><img class="lazyload" data-src="https://i.ibb.co/vsWncYR/cat-sight.jpg" alt="cat-sight" border="0" style="display:inline;margin-bottom:0"></a>
+<a href="https://ibb.co/Nsstxz7"><img class="lazyload" data-src="https://i.ibb.co/c11kJdx/cat-nose.jpg" alt="cat-nose" border="0" style="display:inline;margin-bottom:0"></a></div><span class="img-caption text-muted">Broadened eye sight and wet nose of cats.</span>  
 On the other hand, cats and human babies are similar because of their behavior. Babies cries at a certain frequency, which would effectively attract their parents. Likewise, cats usually meow at the same frequency when wanting to get their owner’s attention. Surprisingly, when a new baby arrives a family, some cats may meow more in order to express the jealousy they feel. These are probably the results of evolution and adaptation.  
-<a href="https://ibb.co/dJFTMq7"><img src="/img/inPost/SS/Cat-Vocalizations.jpg" alt="Cat-Vocalizations" border="0" style="display:inline"><span class="img-caption text-muted">Seven kinds of cat vocalizations.</span></a>
+<a href="https://ibb.co/dJFTMq7"><img class="lazyload" data-src="/img/inPost/SS/Cat-Vocalizations.jpg" alt="Cat-Vocalizations" border="0" style="display:inline"><span class="img-caption text-muted">Seven kinds of cat vocalizations.</span></a>
 
 ## What does supernormal stimulus do in daily life?
 
@@ -46,12 +46,12 @@ So far, supernormal stimulus plays an important role in feline-human relationshi
 > -_God Bless You, Mr. Rosewater_
 
 Moreover, as the stimuli continues, it will start to become weaker, so people will need a more powerful hit to feel “entertained”. Now, drown in the ocean of millions of short videos and various of phone games, people are able to get instantly accessible comfort. Even during a small break, their attention can be tightly drawn to that world full of neon lights.  
-<a href="https://ibb.co/Mpd79kB"><img src="/img/inPost/SS/neon-city.jpg" alt="neon-city" border="0" style="display:inline"><span class="img-caption text-muted">The world of neon lights, a place where you can easily lose yourself.</span></a>  
+<a href="https://ibb.co/Mpd79kB"><img class="lazyload" data-src="/img/inPost/SS/neon-city.jpg" alt="neon-city" border="0" style="display:inline"><span class="img-caption text-muted">The world of neon lights, a place where you can easily lose yourself.</span></a>  
 Also, supernormal stimulus can make neuron system seriously under tension, but not muscular system. “Eyes remained focused, the body is still and directed toward the set, but learning and memory drop to lower levels than when not orienting.” said Rothschild, a psychology researcher, and his/her colleagues.
 
 > “You are alone in the dark, staring at a plastic box. This is like a science fiction horror story...”(Whitedot.org, 1996)
 >
-> <div style="text-align:center"><a href="https://ibb.co/dJ6fRJQ"><img src="https://i.ibb.co/1JK0kJ9/TV-1.jpg" alt="TV-1" border="0" style="display:inline"></a><a href="https://ibb.co/8rGYz2P"><img src="https://i.ibb.co/pfNhWZ4/TV-2.jpg" alt="TV-2" border="0" style="display:inline"></a></div><span class="img-caption text-muted">It is still creepy and tragic even if you are not alone.</span>
+> <div style="text-align:center"><a href="https://ibb.co/dJ6fRJQ"><img class="lazyload" data-src="https://i.ibb.co/1JK0kJ9/TV-1.jpg" alt="TV-1" border="0" style="display:inline"></a><a href="https://ibb.co/8rGYz2P"><img class="lazyload" data-src="https://i.ibb.co/pfNhWZ4/TV-2.jpg" alt="TV-2" border="0" style="display:inline"></a></div><span class="img-caption text-muted">It is still creepy and tragic even if you are not alone.</span>
 
 At the moment, you may want to turn off the glowing screen in front of your face at once. Despite in the most of time you have to keep them on in order to live in today’s information society, it is indeed a good idea to move your eyeballs, focus on other things like your family, friends, etc. The sound of meow from behind, which draws your attention, means that you need a break, too. In all, just let your brain rest.
 
