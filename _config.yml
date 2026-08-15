@@ -4,15 +4,13 @@ SEOTitle: 荷边赏月的博客 | Lotus Moon's Blog
 header-img: img/home-bg-3.jpg
 favicon: /img/moon.svg
 email: lotus_0_moon@sina.com
-description: '这里是 @荷边赏月 的个人博客，与你一起发现更大的世界 | 要做一个有梦想的人'
+description: "这里是 @荷边赏月 的个人博客，与你一起发现更大的世界 | 要做一个有梦想的人"
 keyword: "荷边赏月, 荷边赏月的博客, 博客, 个人网站, 互联网, Web, JavaScript, 前端, 设计, Lotus Moon's Blog, Lotus Moon"
-url: 'https://lotus0moon.github.io' # your host, for absolute URL
-baseurl: '' # for example, '/blog' if your blog hosted on 'host/blog'
-
+url: "https://lotus0moon.github.io" # your host, for absolute URL
+baseurl: "" # for example, '/blog' if your blog hosted on 'host/blog'
 
 # Publish posts or collection documents with a future date.
 future: true
-
 
 # SNS settings
 RSS: false
@@ -23,7 +21,6 @@ github_username: lotus0moon
 # facebook_username:  N/A
 # linkedin_username:  firstname-lastname-idxxxx
 
-
 # Build settings
 # from 2016, 'pygments' is unsupported on GitHub Pages. Use 'rouge' for highlighting instead.
 highlighter: rouge
@@ -31,25 +28,23 @@ permalink: pretty
 paginate: 10
 exclude:
   [
-    'less',
-    'node_modules',
-    'Gruntfile.js',
-    'package.json',
-    'README.md',
-    'README.zh.md',
-    'comments.rb'
+    "less",
+    "node_modules",
+    "Gruntfile.js",
+    "package.json",
+    "README.md",
+    "README.zh.md",
+    "comments.rb",
   ]
 anchorjs: true # if you want to customize anchor. check out line:181 of `post.html`
 # If you have timezone issue (e.g. #68) in China, uncomment to use this:
 #timezone: CN
-
 
 # Gems
 # from PR#40, to support local preview for Jekyll 3.0
 # make sure you have this gem installed
 # `$ gem install jekyll-paginate`
 plugins: [jekyll-paginate, jekyll-sitemap]
-
 
 # Markdown settings
 # replace redcarpet to kramdown,
@@ -65,9 +60,8 @@ kramdown:
       line_numbers: true
       start_line: 1
 
-
 # Comments settings
-comments: true
+comments: false
 # Gitalk settings
 # 发完 Blog，自己先打开一下，初始化 Gitalk
 gitalk:
@@ -93,7 +87,6 @@ disqus:
   enable: false
   # disqus.username: dcjin
 
-
 # Analytics settings
 # Baidu Analytics
 ba_track_id: #dd9761aaf8166618d79b999ab965fd10
@@ -102,10 +95,9 @@ ba_track_id: #dd9761aaf8166618d79b999ab965fd10
 # ga_track_id: "UA-49627206-1" # Format: UA-xxxxxx-xx
 # ga_domain: huangxuan.me
 
-
 # Sidebar settings
 sidebar: true # whether or not using Sidebar.
-sidebar-about-description: '心有猛虎，细嗅蔷薇。'
+sidebar-about-description: "心有猛虎，细嗅蔷薇。"
 sidebar-avatar: /img/avatar-LM.png # use absolute URL, seeing it's used in both `/` and `/about/`
 
 # Featured Tags
@@ -113,13 +105,11 @@ featured-tags: true # whether or not using Feature-Tags
 featured-condition-size: 1 # A tag will be featured if the size of it is more than this condition value
 
 # Progressive Web Apps
-chrome-tab-theme-color: '#000000'
+chrome-tab-theme-color: "#000000"
 service-worker: true
-
 
 # MathJax rendering for layout:page (e.g. post preview)
 page-mathjax: false
-
 
 # Friends
 # friends:
@@ -133,7 +123,6 @@ page-mathjax: false
 #     { title: "DHong Say", href: "http://dhong.co" },
 #     { title: "尹峰以为", href: "http://ingf.github.io/" },
 #   ]
-
 
 # Theme
 # theme: merlot
