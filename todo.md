@@ -1,7 +1,8 @@
 - understand & fix:
-  tagcloud
+  package.json(grunt)
+- add:
+  weather-adopting theme
 - rebuild:
-  -BingSiteAuth
   -Baidu Tongji
 - decorate:
   -mimic cosine's blog

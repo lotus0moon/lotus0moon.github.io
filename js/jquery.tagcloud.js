@@ -9,29 +9,25 @@
     lowest = tagWeights[0];
     highest = tagWeights.pop();
     range = highest - lowest;
-    if(range === 0) {range = 1;}
-    // Sizes
-    if (opts.size) {
-      fontIncr = (opts.size.end - opts.size.start)/range;
-    }
+    // if(range === 0) {range = 1;}
+    // // Sizes
+    // if (opts.size) {
+    //   fontIncr = (opts.size.end - opts.size.start)/range;
+    // }
     // Colors
     if (opts.color) {
       colorIncr = colorIncrement (opts.color, range);
     }
     return this.each(function() {
       weighting = $(this).attr("rel") - lowest;
-      if (opts.size) {
-        $(this).css({"font-size": opts.size.start + (weighting * fontIncr) + opts.size.unit});
-      }
+      // if (opts.size) {
+      //   $(this).css({"font-size": opts.size.start + (weighting * fontIncr) + opts.size.unit});
+      // }
       if (opts.color) {
         // change color to background-color
         $(this).css({"backgroundColor": tagColor(opts.color, colorIncr, weighting)});
       }
     });
-  };
-
-  $.fn.tagcloud.defaults = {
-    size: {start: 14, end: 18, unit: "pt"}
   };
 
   // Converts hex to an RGB array
