@@ -47,10 +47,10 @@
     <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="{{ " /css/bootstrap.min.css" | prepend: site.baseurl }}">
+    <link rel="stylesheet" href="{{ " /min.css/bootstrap.min.css" | prepend: site.baseurl }}">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ " /css/hux-blog.min.css" | prepend: site.baseurl }}">
+    <link rel="stylesheet" href="{{ " /min.css/hux-blog.min.css" | prepend: site.baseurl }}">
 
     <!-- Custom Fonts -->
     <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
@@ -66,7 +66,7 @@
 <!-- Global scripts -->
     
     <!-- lazyload -->
-    <script async src="{{ " /js/lazysizes.min.js " | prepend: site.baseurl }}"></script>
+    <script async src='{{ " /min.js/lazysizes.min.js " | prepend: site.baseurl }}'></script>
 
     <!-- busuanzi -->
     <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
@@ -83,22 +83,22 @@
     <!-- add "defer" to optimise the loading of scripts and code appearance - by Lotus Moon 2026.8.15 -->
 
     <!-- jQuery -->
-    <script defer src="{{ " /js/jquery.min.js " | prepend: site.baseurl }}"></script>
+    <script defer src='{{ " /min.js/jquery.min.js " | prepend: site.baseurl }}'></script>
 
     <!-- Bootstrap Core JavaScript -->
     <!-- Currently, only navbar scroll-down effect at desktop still depends on this -->
-    <script defer src="{{ " /js/bootstrap.min.js " | prepend: site.baseurl }}"></script>
+    <script defer src='{{ " /min.js/bootstrap.min.js " | prepend: site.baseurl }}'></script>
 
     <!-- Custom Theme JavaScript -->
-    <script defer src="{{ " /js/hux-blog.min.js " | prepend: site.baseurl }}"></script>
+    <script defer src='{{ " /min.js/hux-blog.min.js " | prepend: site.baseurl }}'></script>
 
     <!-- Simple Jekyll Search -->
-    <script defer src="{{ " /js/simple-jekyll-search.min.js" | prepend: site.baseurl }}"></script>
+    <script defer src='{{ " /min.js/simple-jekyll-search.min.js" | prepend: site.baseurl }}'></script>
 
     <!-- Service Worker -->
     {% if site.service-worker %}
-    <script defer src="{{ " /js/snackbar.js " | prepend: site.baseurl }}"></script>
-    <script defer src="{{ " /js/sw-registration.js " | prepend: site.baseurl }}"></script>
+    <script defer src='{{ " /min.js/snackbar.min.js " | prepend: site.baseurl }}'></script>
+    <script defer src='{{ " /min.js/sw-registration.min.js " | prepend: site.baseurl }}'></script>
     {% endif %}
 
     {% if page.plchart %}
@@ -124,7 +124,7 @@
 
     {% if page.title == 'Archive' %}
     <!-- jquery.tagcloud.js -->
-    <script defer src="{{ " /js/jquery.tagcloud.js" | prepend: site.baseurl }}"></script>
+    <script defer src='{{ "/min.js/jquery.tagcloud.min.js" | prepend: site.baseurl }}'></script>
     <script>
         document.addEventListener('DOMContentLoaded',function(){
             $.fn.tagcloud.defaults = {
@@ -134,7 +134,7 @@
             $('#tag_cloud a').tagcloud()
         })
     </script>
-    <script defer src='{{ "/js/archive.js " | prepend: site.baseurl }}'></script>
+    <script defer src='{{ "/min.js/archive.min.js" | prepend: site.baseurl }}'></script>
     {% endif %}
 
     <!-- Side Catalog -->
@@ -176,7 +176,7 @@
         }))
     })
     </script>
-    <script defer src="{{ '/js/jquery.nav.js' | prepend: site.baseurl }}"></script>
+    <script defer src='{{ "/min.js/jquery.nav.min.js" | prepend: site.baseurl }}'></script>
     <!-- Doc: https://github.com/davist11/jQuery-One-Page-Nav
     Fork by Hux to support padding -->
     <script>
@@ -318,5 +318,5 @@
 
     <!-- Google AdSense -->
     <!-- <script data-ad-client="ca-pub-6487568398225121" async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
+        src="https://pagead2.googlesyndication.com/pagead/min.js/adsbygoogle.js"></script> -->
 </head>

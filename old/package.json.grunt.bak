@@ -1,0 +1,25 @@
+{
+    "name": "LMblog",
+    "title": "Lotus Moon's Blog",
+    "author": "Lotus Moon <lotus_0_moon@sina.com>",
+    "version": "1.8.2",
+    "homepage": "http://lotus0moon.github.io",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/lotus_0_moon/lotus0moon.github.io"
+    },
+    "bugs": "https://github.com/lotus_0_moon/lotus0moon.github.io/issues",
+    "devDependencies": {
+        "grunt": "^1.6.3",
+        "grunt-banner": "~0.2.3",
+        "grunt-contrib-less": "^3.0.0",
+        "grunt-contrib-uglify": "^4.0.1",
+        "grunt-contrib-watch": "^1.1.0"
+    },
+    "scripts": {
+        "start": "bundle exec jekyll serve",
+        "dev": "grunt watch & npm run start",
+        "boil": "git push boilerplate boilerplate:master",
+        "push": "git push origin master --tag"
+    }
+}

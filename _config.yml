@@ -29,12 +29,17 @@ paginate: 10
 exclude:
   [
     "less",
+    "css",
+    "js",
+    "old",
     "node_modules",
-    "Gruntfile.js",
     "package.json",
+    "package-lock.json",
     "README.md",
     "README.zh.md",
     "comments.rb",
+    "lotus0moon.github.io.code-workspace",
+    "todo.md",
   ]
 anchorjs: true # if you want to customize anchor. check out line:181 of `post.html`
 # If you have timezone issue (e.g. #68) in China, uncomment to use this:

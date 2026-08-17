@@ -1,5 +1,3 @@
-- understand & fix:
-  package.json(grunt)
 - add:
   weather-adopting theme
 - rebuild:

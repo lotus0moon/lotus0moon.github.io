@@ -5,6 +5,7 @@ _posts/_archive
 _archive
 node_modules
 .vscode
+.idea
 *.code-workspace
 *.log
 *.lock
