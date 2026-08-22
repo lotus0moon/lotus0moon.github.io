@@ -1,0 +1,196 @@
+---
+layout: default
+no-catalog: true
+title: "Birthday"
+ID: birthday
+header-mask: 0
+bgmId: 2100554583
+---
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #0f0c29, #302b64, #24243e);
+        overflow: hidden;
+        font-family: "Microsoft Yahei", sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    /* 主标题样式 */
+    .title {
+        font-size: clamp(2rem,8vw,4rem);
+        color: #fff;
+        text-shadow: 0 0 20px #ffd700, 0 0 40px #ff9500;
+        animation: bounce 1.2s infinite alternate;
+        text-align: center;
+        z-index: 10;
+    }
+    .sub-text {
+        margin-top:20px;
+        font-size: clamp(1rem,4vw,1.6rem);
+        color:#ffffff;
+        text-shadow:0 0 10px #fff;
+        z-index: 10;
+    }
+    .cake {
+        font-size: 6rem;
+        margin:30px 0;
+        animation: shake 2s infinite;
+        z-index: 10;
+    }
+    /* 气球样式 - 提高z-index，防止被烟花覆盖 */
+    .balloon {
+        position: absolute;
+        width:60px;
+        height:80px;
+        border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;
+        bottom:-120px;
+        animation: float 8s infinite ease-in-out;
+        z-index: 5;
+    }
+    .balloon::after{
+        content:"";
+        position:absolute;
+        width:1px;
+        height:80px;
+        background:#fff;
+        left:50%;
+        top:100%;
+        transform:translateX(-50%);
+    }
+    /* 烟花画布放到最底层，不再覆盖页面底色 */
+    #fireworks {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        pointer-events: none;
+    }
+    #bGMusic {
+        display: none;
+    }
+    footer {
+        display: none;
+    }
+
+    /* 动画关键帧 */
+    @keyframes float {
+        0% {
+            transform: translateY(0) rotate(0deg);
+            opacity:1;
+        }
+        100% {
+            transform: translateY(-110vh) rotate(15deg);
+            opacity:0;
+        }
+    }
+    @keyframes bounce {
+        from {transform: translateY(0px);}
+        to {transform: translateY(-15px);}
+    }
+    @keyframes shake {
+        0%,100% {transform: rotate(-4deg);}
+        50% {transform: rotate(4deg);}
+    }
+</style>
+<!-- 烟花画布 -->
+<canvas id="fireworks"></canvas>
+
+<div class="title">🎉 生日快乐 🎉</div>
+<div class="cake">🎂</div>
+<div class="sub-text">愿所有美好与幸运，AAA</div>
+
+<!-- 背景音乐 -->
+{% include background-music.html %}
+
+<script>
+    // ========== 2. 随机漂浮气球 ==========
+    const colors = ['#ff4757','#2ed573','#1e90ff','#ffa502','#ff6b81','#5352ed','#fff200'];
+    function createBalloon(){
+        const balloon = document.createElement('div');
+        balloon.classList.add('balloon');
+        balloon.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
+        balloon.style.left = Math.random()*95 + '%';
+        balloon.style.animationDelay = Math.random()*3 + 's';
+        balloon.style.animationDuration = (6 + Math.random()*5) + 's';
+        document.body.appendChild(balloon);
+        setTimeout(()=>{ balloon.remove(); },13000)
+    }
+    setInterval(createBalloon,600);
+    for(let i=0;i<10;i++) createBalloon();
+
+    // ========== 3. 全屏烟花特效（修复黑屏，兼容Firefox） ==========
+    const canvas = document.getElementById('fireworks');
+    const ctx = canvas.getContext('2d');
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    window.addEventListener('resize',()=>{
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+    })
+
+    class Particle {
+        constructor(x,y,color){
+            this.x = x;
+            this.y = y;
+            this.color = color;
+            this.radius = Math.random()*2 + 1;
+            this.speedX = Math.random()*6 - 3;
+            this.speedY = Math.random()*6 - 3;
+            this.alpha = 1;
+            this.decay = Math.random()*0.015 + 0.005;
+        }
+        update(){
+            this.x += this.speedX;
+            this.y += this.speedY;
+            this.alpha -= this.decay;
+        }
+        draw(){
+            ctx.save();
+            ctx.globalAlpha = this.alpha;
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+            ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);
+            ctx.fill();
+            ctx.restore();
+        }
+    }
+
+    let particles = [];
+    const fireColors = ['#ff0043','#14fc56','#1e90ff','#fff35c','#ff6ef3','#ffffff'];
+
+    function createFirework(){
+        const x = Math.random() * width;
+        const y = Math.random() * height / 2;
+        const color = fireColors[Math.floor(Math.random()*fireColors.length)];
+        for(let i=0;i<80;i++){
+            particles.push(new Particle(x,y,color));
+        }
+    }
+
+    function animate(){
+        // ✅ 关键改动：使用透明黑色叠加，不再彻底涂黑，保留渐变背景
+        ctx.fillStyle = 'rgba(0,0,0,0.08)';
+        ctx.fillRect(0,0,width,height);
+        for(let i=particles.length-1;i>=0;i--){
+            let p = particles[i];
+            p.update();
+            p.draw();
+            if(p.alpha <= 0){
+                particles.splice(i,1);
+            }
+        }
+        requestAnimationFrame(animate);
+    }
+    animate();
+    setInterval(createFirework,800)
+</script>
