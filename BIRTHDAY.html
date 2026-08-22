@@ -5,7 +5,6 @@ title: "Birthday"
 hide-in-nav: true
 ID: birthday
 header-mask: 0
-bgmId: 2100554583
 ---
 <style>
     * {
@@ -107,12 +106,22 @@ bgmId: 2100554583
 
 <div class="title">🎉 生日快乐 🎉</div>
 <div class="cake">🎂</div>
-<div class="sub-text">愿所有美好与幸运，AAA</div>
+<div class="sub-text">愿所有美好与幸运，霖</div>
 
 <!-- 背景音乐 -->
-{% include background-music.html %}
-
+<audio id="bGMusic" autoplay="true" loop="true">
+    <source src="/music/the_mountain-happy-birthday.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
 <script>
+     // ========== 1. 背景音乐：点击页面解锁播放（兼容 Firefox / Chrome） ==========
+    const bgMusic = document.getElementById('bGMusic');
+    document.addEventListener('click', () => {
+        bgMusic.play().catch(err => {
+            console.log("音频播放失败：", err);
+        });
+    }, { once: true }); // once:true 只监听一次点击
+
     // ========== 2. 随机漂浮气球 ==========
     const colors = ['#ff4757','#2ed573','#1e90ff','#ffa502','#ff6b81','#5352ed','#fff200'];
     function createBalloon(){
