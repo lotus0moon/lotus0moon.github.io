@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>给学委 · 生日快乐</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='14' fill='%23f5f1e7'/%3E%3Crect x='24' y='24' width='52' height='52' rx='8' fill='none' stroke='%23a9822f' stroke-width='7'/%3E%3Crect x='38' y='38' width='24' height='24' rx='4' fill='%23a9822f'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@600;900&display=swap">
+<style>
+  :root{
+    --ink:#20242e;
+    --line:#d9d1bd;
+    --gold:#a9822f;
+    --gold-soft:#8f6f26;
+    --muted:#5f6670;
+    --cs: clamp(30px, 4.6vw, 72px);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(120% 90% at 50% 0%, #faf7f0 0%, #f2eddf 46%, #eae4d2 100%);
+    color:var(--ink);
+    font-family:'Noto Serif SC','Songti SC','SimSun',serif;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  .grain{
+    position:fixed;inset:0;pointer-events:none;opacity:.6;z-index:0;
+    background-image:
+      radial-gradient(circle at 30% 40%, rgba(169,130,47,.05) 0, transparent 40%),
+      radial-gradient(circle at 70% 80%, rgba(169,130,47,.04) 0, transparent 45%);
+  }
+
+  .poster{
+    position:relative;z-index:1;
+    width:100%;max-width:1260px;margin:0 auto;
+    padding: clamp(26px,4vh,50px) clamp(14px,4vw,44px) clamp(30px,5vh,60px);
+    display:flex;flex-direction:column;align-items:center;
+    min-height:100vh;text-align:center;
+  }
+
+  .kicker{
+    display:inline-flex;align-items:center;gap:.7em;
+    font-size:clamp(12px,1.5vw,15px);letter-spacing:.55em;text-indent:.55em;
+    color:var(--gold);margin:0 0 clamp(22px,4vh,40px);font-weight:600;
+  }
+  .kicker::before,.kicker::after{
+    content:"";height:1px;width:clamp(28px,6vw,72px);
+    background:linear-gradient(90deg,transparent,var(--gold-soft));
+  }
+  .kicker::after{background:linear-gradient(90deg,var(--gold-soft),transparent);}
+
+  /* 各文案区块：不同位置 */
+  .stage{display:flex;flex-direction:column;gap:clamp(24px,4.5vh,44px);width:100%;}
+  .phrase{display:flex;flex-direction:column;gap:6px;}
+  .phrase--hero{--cs:clamp(34px,5.4vw,86px);align-self:center;}
+  .phrase--wish{--cs:clamp(22px,3.4vw,54px);align-self:flex-start;}
+  .phrase--side{--cs:clamp(28px,4.4vw,70px);align-self:flex-end;}
+  .phrase--bro {--cs:clamp(20px,3.2vw,50px);align-self:stretch;}
+
+  .rows{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(1px,.3vw,5px);}
+  canvas.char{
+    width:var(--cs);height:var(--cs);
+    display:block;flex:0 0 auto;
+    transition:transform .3s cubic-bezier(.2,.7,.2,1);
+  }
+  canvas.char:hover{transform:scale(1.05);}
+
+  .punct{
+    width:calc(var(--cs)*0.5);height:var(--cs);
+    display:flex;align-items:center;justify-content:center;flex:0 0 auto;
+    color:var(--gold);font-size:calc(var(--cs)*0.5);font-weight:900;line-height:1;
+  }
+
+  .phrase figcaption{
+    font-size:clamp(10px,1.3vw,14px);
+    color:var(--muted);letter-spacing:.08em;
+    text-align:center;max-width:62em;margin-top:3px;line-height:1.6;
+  }
+  .phrase--wish figcaption{text-align:left;}
+  .phrase--side figcaption{text-align:right;}
+
+  .note{
+    margin:clamp(26px,4.5vh,48px) 0 0;color:var(--muted);
+    font-size:clamp(11px,1.4vw,14px);letter-spacing:.3em;text-indent:.3em;
+    display:flex;flex-direction:column;gap:10px;align-items:center;
+  }
+  .note .sub{letter-spacing:.12em;text-indent:.12em;color:#7a8089;font-size:clamp(11px,1.3vw,13px);}
+  .note .bar{width:34px;height:1px;background:var(--gold-soft);margin-top:4px;}
+
+  @media (max-width:640px){
+    .phrase--wish,.phrase--side{align-self:center;}
+    .phrase--wish figcaption,.phrase--side figcaption{text-align:center;}
+  }
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<main class="poster">
+  <p class="kicker">六面刻章 · 沿骨拼字</p>
+
+  <div class="stage" id="stage"></div>
+
+  <footer class="note">
+    <span class="bar" aria-hidden="true"></span>
+    <span>六幅人物图 · 沿笔画骨架逐张分布</span>
+    <span class="sub">你猜 · 这六张 · 是什么 · DOGE</span>
+  </footer>
+</main>
+
+<script>
+/* ============ 资源：单张精灵图（6 图合一，仅 1 次请求） ============ */
+var SPRITE_URL = "https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/AIVzbXVEZovTGmxuL0XcVvEvnjb";
+var SPRITE_RECTS = [  // [x, y, w, h] 精灵图中 6 个分块
+  [0,  0, 72, 76],
+  [0, 76, 72, 76],
+  [0,152, 72,108],
+  [0,260, 72,108],
+  [0,368, 72,108],
+  [0,476, 72, 88]
+];
+var IMG = new Image();
+IMG.src = SPRITE_URL;
+
+var FONT = "'Noto Serif SC','Songti SC','SimSun',serif";
+var LOG = 256;
+var TILE = 22;     // 单张图在 LOG 里的尺寸
+var SPACING = 19;  // 骨架取点间距
+var DPR = Math.min(window.devicePixelRatio || 1, 2);
+var PUNCT = "，。！？、（）…；：·";
+
+/* 每句文案：text 原话，weights 前3张/后3张权重差异大，且句与句之间的差异幅度互不相同 */
+var BLOCKS = [
+  { text:"拉练拉琴拉学习，不拉反夯", weights:[18,18,18,1,1,1], cls:"phrase--hero" },
+  { text:"高油高糖高精力，步步高升", weights:[1,1,1,14,14,14], cls:"phrase--hero" },
+  { text:"祝lqh生日快乐！岁有尽，春无休，指点江山少年游。愿你在新的一岁健康快乐，万事顺遂，题目全AC！", weights:[9,9,9,1,1,1], cls:"phrase--wish" },
+  { text:"岁岁常欢愉，年年皆胜意", weights:[1,1,1,11,11,11], cls:"phrase--side" },
+  { text:"兄弟生日快乐，新的一年里万事皆顺，编译全都一次过。和女朋友百年好合啊（doge），以后编程记得带带我…菜菜带带", weights:[1,1,1,6,6,6], cls:"phrase--bro" }
+];
+
+/* ============ Zhang-Suen 细化：提取笔画骨架 ============ */
+function thin(bin, w, h){
+  var p = new Uint8Array(bin);
+  var changed = true;
+  while (changed){
+    changed = false;
+    for (var step = 0; step < 2; step++){
+      var del = [];
+      for (var y = 1; y < h - 1; y++){
+        for (var x = 1; x < w - 1; x++){
+          var idx = y * w + x;
+          if (!p[idx]) continue;
+          var p2=p[idx-w], p3=p[idx-w+1], p4=p[idx+1], p5=p[idx+w+1],
+              p6=p[idx+w], p7=p[idx+w-1], p8=p[idx-1], p9=p[idx-w-1];
+          var B = p2+p3+p4+p5+p6+p7+p8+p9;
+          if (B < 2 || B > 6) continue;
+          var seq=[p2,p3,p4,p5,p6,p7,p8,p9,p2], A=0;
+          for (var i=0;i<8;i++) if (seq[i]===0 && seq[i+1]===1) A++;
+          if (A !== 1) continue;
+          if (step===0){ if (p2*p4*p6===0 && p4*p6*p8===0) del.push(idx); }
+          else         { if (p2*p4*p8===0 && p2*p6*p8===0) del.push(idx); }
+        }
+      }
+      for (var k=0;k<del.length;k++){ p[del[k]]=0; changed=true; }
+    }
+  }
+  return p;
+}
+
+/* ============ 按字形骨架取点（每字缓存） ============ */
+var skeletonCache = new Map();
+function skeletonFor(ch){
+  if (skeletonCache.has(ch)) return skeletonCache.get(ch);
+  var oc = document.createElement("canvas");
+  oc.width = LOG; oc.height = LOG;
+  var ctx = oc.getContext("2d", { willReadFrequently: true });
+  ctx.clearRect(0, 0, LOG, LOG);
+  ctx.fillStyle = "#000";
+  ctx.textAlign = "center"; ctx.textBaseline = "middle";
+  ctx.font = "900 " + (LOG * 0.84) + "px " + FONT;
+  ctx.fillText(ch, LOG/2, LOG/2);
+  var data = ctx.getImageData(0, 0, LOG, LOG).data;
+  var bin = new Uint8Array(LOG * LOG);
+  for (var i = 0; i < LOG * LOG; i++) if (data[i*4+3] > 90) bin[i] = 1;
+  var skel = thin(bin, LOG, LOG);
+  var pts = [], grid = {}, cell = SPACING;
+  for (var y = 1; y < LOG - 1; y++){
+    for (var x = 1; x < LOG - 1; x++){
+      if (!skel[y*LOG+x]) continue;
+      var gx = Math.floor(x/cell), gy = Math.floor(y/cell), k = gx+","+gy;
+      if (grid[k]) continue;
+      grid[k] = 1;
+      pts.push([x + (Math.random()*cell*0.6-cell*0.3), y + (Math.random()*cell*0.6-cell*0.3)]);
+    }
+  }
+  skeletonCache.set(ch, pts);
+  return pts;
+}
+
+/* ============ 按权重选图（前3张 / 后3张差异大） ============ */
+function pickIdx(weights){
+  var total = 0, i;
+  for (i = 0; i < weights.length; i++) total += weights[i];
+  var r = Math.random() * total;
+  for (i = 0; i < weights.length; i++){ r -= weights[i]; if (r < 0) return i; }
+  return weights.length - 1;
+}
+
+/* ============ 渲染单个字 ============ */
+function renderChar(canvas, ch, weights){
+  var rect = canvas.getBoundingClientRect();
+  if (rect.width < 2){ rect.width = 100; rect.height = 100; }
+  canvas.width  = Math.round(rect.width  * DPR);
+  canvas.height = Math.round(rect.height * DPR);
+  var ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  var pts = skeletonFor(ch);
+  var S = canvas.width / LOG;
+  var tw = TILE * S;
+  for (var i = 0; i < pts.length; i++){
+    var r = SPRITE_RECTS[pickIdx(weights)];
+    var th = tw * (r[3] / r[2]);
+    var cx = pts[i][0] * S, cy = pts[i][1] * S;
+    var rot = (Math.random() * 90 - 45);
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(rot * Math.PI / 180);
+    ctx.drawImage(IMG, r[0], r[1], r[2], r[3], -tw/2, -th/2, tw, th);
+    ctx.restore();
+  }
+}
+
+/* ============ 构建所有文案区块 ============ */
+function buildBlock(b){
+  var stage = document.getElementById("stage");
+  var ph = document.createElement("section");
+  ph.className = "phrase " + b.cls;
+  var rows = document.createElement("div");
+  rows.className = "rows";
+  for (var i = 0; i < b.text.length; i++){
+    var ch = b.text.charAt(i);
+    if (PUNCT.indexOf(ch) !== -1){
+      var p = document.createElement("span");
+      p.className = "punct"; p.textContent = ch; p.setAttribute("aria-hidden","true");
+      rows.appendChild(p);
+    } else {
+      var c = document.createElement("canvas");
+      c.className = "char"; c.setAttribute("role","img"); c.setAttribute("aria-label", ch);
+      c.setAttribute("data-w", JSON.stringify(b.weights));
+      rows.appendChild(c);
+    }
+  }
+  var cap = document.createElement("figcaption");
+  cap.textContent = b.text;
+  ph.appendChild(rows);
+  ph.appendChild(cap);
+  stage.appendChild(ph);
+}
+
+function init(){
+  for (var i = 0; i < BLOCKS.length; i++) buildBlock(BLOCKS[i]);
+
+  var canvases = document.querySelectorAll("canvas.char");
+  function renderOne(cv){
+    renderChar(cv, cv.getAttribute("aria-label"), JSON.parse(cv.getAttribute("data-w")));
+  }
+  if (!("IntersectionObserver" in window)){
+    for (var j = 0; j < canvases.length; j++) renderOne(canvases[j]);
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    for (var k = 0; k < entries.length; k++){
+      if (entries[k].isIntersecting){
+        var cv = entries[k].target;
+        renderOne(cv);
+        io.unobserve(cv);
+      }
+    }
+  }, { rootMargin: "360px 0px" });
+  for (var m = 0; m < canvases.length; m++) io.observe(canvases[m]);
+}
+
+document.fonts && document.fonts.ready ? document.fonts.ready.then(start) : start();
+function start(){
+  if (IMG.complete && IMG.naturalWidth > 0) init();
+  else IMG.onload = init;
+}
+</script>
+</body>
+</html>
