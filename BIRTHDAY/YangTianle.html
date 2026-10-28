@@ -1,0 +1,2347 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#F4F6F8">
+  <title>Z.ai - 为杨天乐庆生 🎂</title>
+
+  <!-- 浏览器图标：Z.ai Logo + 生日帽 -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Cdefs%3E%3ClinearGradient%20id='g'%20x1='0'%20y1='0'%20x2='1'%20y2='1'%3E%3Cstop%20offset='11%25'%20stop-color='%23191a1d'/%3E%3Cstop%20offset='96%25'%20stop-color='%23747689'/%3E%3C/linearGradient%3E%3ClinearGradient%20id='h'%20x1='0'%20y1='0'%20x2='0'%20y2='1'%3E%3Cstop%20offset='0'%20stop-color='%23FF8A8A'/%3E%3Cstop%20offset='100%25'%20stop-color='%23FF3D71'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20x='2'%20y='8'%20width='60'%20height='54'%20rx='13'%20fill='url(%23g)'/%3E%3Cpath%20d='M18%2024H46V31L25%2047H46V54H18V47L39%2031H18Z'%20fill='white'/%3E%3Cpolygon%20points='49,7%2040,21%2058,21'%20fill='url(%23h)'/%3E%3Ccircle%20cx='47'%20cy='12'%20r='1.6'%20fill='white'%20opacity='.85'/%3E%3Ccircle%20cx='52'%20cy='15'%20r='1.6'%20fill='white'%20opacity='.85'/%3E%3Ccircle%20cx='46'%20cy='17.5'%20r='1.5'%20fill='white'%20opacity='.85'/%3E%3Crect%20x='38'%20y='19'%20width='22'%20height='5'%20rx='2.5'%20fill='%23FFE066'/%3E%3Ccircle%20cx='49'%20cy='6'%20r='3'%20fill='%23FFE066'/%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    @font-face {
+      font-family: 'Geist';
+      src: url('https://z-cdn.chatglm.cn/z-ai/static/fonts/Geist%5Bwght%5D.ttf') format('truetype-variations');
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --bg-app: #FFFFFF;
+      --bg-sidebar: #F8F8F8;
+      --bg-hover: rgba(13, 13, 13, 0.05);
+      --bg-user-msg: #F4F4F5;
+      --bg-card: #F3F3F3;
+      --bg-input: #F7F8F9;
+      --text-primary: #0d0d0d;
+      --text-secondary: #5c5c5c;
+      --text-muted: #888;
+      --border-light: rgba(13, 13, 13, 0.10);
+      --sidebar-width: 260px;
+      --content-max-width: 800px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Geist', 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', 'Microsoft YaHei', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-app);
+      color: var(--text-primary);
+      height: 100vh;
+      height: 100dvh;
+      display: flex;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ================= 全局滚动条样式 ================= */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #C1C1C1;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #A8A8A8;
+    }
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: #C1C1C1 transparent;
+    }
+
+    /* ================= 侧边栏 ================= */
+    .sidebar {
+      width: var(--sidebar-width);
+      min-width: var(--sidebar-width);
+      background-color: var(--bg-sidebar);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 10;
+      transition: width 0.2s ease, min-width 0.2s ease;
+    }
+
+    .sidebar.collapsed { width: 72px; min-width: 72px; }
+    .sidebar.collapsed .logo-text,
+    .sidebar.collapsed .nav-text,
+    .sidebar.collapsed .section-title,
+    .sidebar.collapsed .sidebar-footer span { display: none; }
+    .sidebar.collapsed .sidebar-header { flex-direction: column; gap: 16px; align-items: center; padding: 16px 0; }
+    .sidebar.collapsed .nav-item { justify-content: center; padding: 12px; }
+    .sidebar.collapsed .section-title { justify-content: center; padding: 24px 0 8px; }
+    .sidebar.collapsed .nav-item .nav-badge { display: none; }
+    .sidebar.collapsed .recent-section { display: none; }
+
+    .sidebar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 16px 8px 16px;
+    }
+
+    .logo-area { display: flex; align-items: center; gap: 8px; }
+
+    .logo-icon {
+      width: 28px; height: 28px;
+      background: linear-gradient(135deg, #191a1d 11%, #747689 96%, #191a1d 164%);
+      color: white; border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 18px; letter-spacing: -1px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    .logo-text {
+      font-weight: 600;
+      font-size: 16px;
+      letter-spacing: -0.3px;
+      background: linear-gradient(135deg, #191a1d, #747689 46%, #191a1d);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .icon-btn {
+      background: none; border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      padding: 6px; border-radius: 8px; color: var(--text-secondary);
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+    .icon-btn:hover { background-color: var(--bg-hover); color: var(--text-primary); }
+    .icon-btn svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* 移动端菜单按钮（桌面隐藏） */
+    .mobile-menu-btn {
+      display: none;
+      margin-right: auto;
+    }
+
+    .sidebar-nav { padding: 4px 12px; display: flex; flex-direction: column; gap: 2px; }
+
+    .nav-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 12px; border-radius: 10px;
+      font-size: 14px; color: var(--text-primary);
+      cursor: pointer; transition: background 0.15s ease;
+      user-select: none;
+    }
+    .nav-item:hover, .nav-item.active { background-color: var(--bg-hover); }
+    .nav-item svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.6; color: var(--text-secondary); flex-shrink: 0; }
+    .nav-item .nav-badge {
+      margin-left: auto;
+      background: linear-gradient(135deg, #ff7a7a, #ff4d6d);
+      color: #fff;
+      font-size: 10px;
+      padding: 1px 6px;
+      border-radius: 10px;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+    }
+
+    /* ================= 最近会话区域 ================= */
+    .sidebar-divider {
+      height: 1px;
+      background-color: var(--border-light);
+      margin: 12px 16px;
+    }
+
+    .recent-section {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      padding: 0 8px;
+    }
+
+    .recent-section .section-title {
+      padding: 8px 8px 8px 16px;
+      cursor: default;
+    }
+
+    .more-tooltip-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .recent-more-btn {
+      padding: 4px;
+      border-radius: 6px;
+      color: var(--text-secondary);
+    }
+    .recent-more-btn:hover { background: var(--bg-hover); color: var(--text-primary); }
+    .recent-more-btn svg circle { fill: currentColor; }
+
+    .tooltip-box {
+      position: absolute;
+      top: calc(100% + 6px);
+      right: -4px;
+      background: #191a1d;
+      color: #fff;
+      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-4px);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 100;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .tooltip-box::before {
+      content: '';
+      position: absolute;
+      top: -4px;
+      right: 12px;
+      border-width: 0 4px 4px 4px;
+      border-style: solid;
+      border-color: transparent transparent #191a1d transparent;
+    }
+    .recent-more-btn:hover + .tooltip-box {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .recent-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      overflow-y: auto;
+      max-height: 220px;
+      padding-bottom: 8px;
+    }
+    .recent-list::-webkit-scrollbar { width: 4px; }
+
+    .recent-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 13.5px;
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: background 0.15s;
+      user-select: none;
+    }
+    .recent-item:hover { background-color: var(--bg-hover); }
+    .recent-item.active {
+      background: linear-gradient(90deg, rgba(255, 228, 160, 0.3) 0%, rgba(255, 196, 107, 0.1) 100%);
+      font-weight: 500;
+    }
+    .recent-item .item-title {
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-right: 8px;
+    }
+    .recent-item .item-actions {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      background: rgba(0,0,0,0.04);
+      color: var(--text-secondary);
+      transition: background 0.15s;
+    }
+    .recent-item:hover .item-actions { display: flex; }
+    .recent-item .item-actions:hover { background: rgba(0,0,0,0.08); }
+
+    .section-title {
+      font-size: 13px; color: var(--text-secondary);
+      padding: 24px 16px 8px 16px;
+      display: flex; justify-content: space-between; align-items: center; cursor: pointer;
+      user-select: none;
+    }
+    .section-title:hover { color: var(--text-primary); }
+    .section-title svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 2; }
+
+    .sidebar-spacer { flex: 1; }
+
+    .sidebar-footer { padding: 16px; display: flex; align-items: center; justify-content: space-between; }
+    .user-info { display: flex; align-items: center; gap: 12px; font-size: 14px; cursor: pointer; border-radius: 8px; padding: 4px; transition: background 0.15s; }
+    .user-info:hover { background: var(--bg-hover); }
+    .avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #FFE4A0, #FFC46B); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 16px; }
+
+    /* ================= 移动端遮罩层 ================= */
+    .sidebar-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 99;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.28s ease, visibility 0.28s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .sidebar-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* ================= 主区域 ================= */
+    .main {
+      flex: 1; display: flex; flex-direction: column; min-width: 0; min-height: 0; position: relative;
+      background-color: var(--bg-app);
+    }
+
+    .top-bar {
+      height: 56px; padding: 0 24px;
+      display: flex; align-items: center; justify-content: flex-end;
+      flex-shrink: 0; gap: 16px; z-index: 20;
+    }
+
+    .top-link {
+      display: flex; align-items: center; gap: 4px;
+      color: var(--text-secondary); font-size: 14px; text-decoration: none;
+      transition: color 0.2s; cursor: pointer;
+      padding: 6px 10px;
+      border-radius: 8px;
+    }
+    .top-link:hover { color: var(--text-primary); background: var(--bg-hover); }
+    .top-link svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+    /* ================= 欢迎页面 ================= */
+    .welcome-screen {
+      flex: 1;
+      min-height: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+      padding: 40px 24px 40px; overflow-y: auto; position: relative;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+    }
+
+    .welcome-bg {
+      position: absolute; top: 0; left: 0; right: 0; height: 300px;
+      background: radial-gradient(ellipse at top, rgba(255, 180, 200, 0.20) 0%, transparent 70%);
+      mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .welcome-title {
+      font-size: 40px;
+      font-weight: 500;
+      font-family: 'Crimson Text', 'Noto Serif SC', Georgia, serif;
+      color: #111827;
+      margin-bottom: 8px;
+      z-index: 1;
+      letter-spacing: 0.5px;
+      animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+      text-align: center;
+    }
+
+    .welcome-subtitle {
+      font-size: 15px;
+      color: var(--text-secondary);
+      margin-bottom: 40px;
+      z-index: 1;
+      animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both;
+      text-align: center;
+    }
+    .welcome-subtitle .heart { color: #ff4d6d; font-weight: 600; }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      max-width: 800px;
+      width: 100%;
+      margin-bottom: 60px;
+      z-index: 1;
+      animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.16s both;
+    }
+
+    .card {
+      background-color: var(--bg-card);
+      border-radius: 16px;
+      padding: 12px;
+      display: flex; flex-direction: column; gap: 12px;
+      cursor: pointer;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s, background 0.2s;
+      border: 1px solid transparent;
+      user-select: none;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+      background-color: #EFEFEF;
+      border-color: rgba(0,0,0,0.04);
+    }
+    .card:active { transform: translateY(-1px) scale(0.99); }
+
+    .card-img {
+      width: 100%; aspect-ratio: 4/3;
+      background: linear-gradient(135deg, #FCE9C9 0%, #F7D6A0 50%, #F2C88E 100%);
+      border-radius: 10px;
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 36px;
+    }
+    .card-img::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, transparent 100%);
+    }
+    .card:nth-child(2) .card-img { background: linear-gradient(135deg, #DCE9FF, #B8CFFF); }
+    .card:nth-child(3) .card-img { background: linear-gradient(135deg, #D9F5E7, #A8E6C7); }
+    .card:nth-child(4) .card-img { background: linear-gradient(135deg, #FFE0EB, #FFB6CD); }
+    .card:nth-child(5) .card-img { background: linear-gradient(135deg, #E8DEFF, #C4B3FF); }
+
+    .card-title {
+      text-align: center; font-size: 14px; color: var(--text-secondary); font-weight: 500;
+    }
+
+    .cards-grid .card:nth-child(4) { grid-column: 1 / 2; margin-left: 50%; }
+    .cards-grid .card:nth-child(5) { grid-column: 2 / 3; margin-right: 50%; }
+
+    /* ================= 聊天区域 ================= */
+    .chat-container {
+      flex: 1; overflow-y: auto; padding: 24px;
+      display: none;
+      flex-direction: column;
+      min-height: 0;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+    }
+    .chat-container.active { display: flex; }
+
+    .message {
+      display: flex; width: 100%; max-width: var(--content-max-width);
+      margin: 0 auto 32px; animation: msgIn 0.2s ease both;
+    }
+    @keyframes msgIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+    .message.user { justify-content: flex-end; }
+    .message.user .msg-bubble {
+      background-color: var(--bg-user-msg); color: var(--text-primary);
+      border-radius: 16px; border-bottom-right-radius: 4px;
+      padding: 12px 20px; font-size: 15px; line-height: 1.6; max-width: 80%;
+    }
+
+    .message.assistant { flex-direction: column; gap: 12px; }
+
+    .thinking-process {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; color: var(--text-muted); cursor: pointer; user-select: none;
+      padding: 4px 8px;
+      border-radius: 6px;
+      align-self: flex-start;
+      transition: background 0.15s;
+    }
+    .thinking-process:hover { background: var(--bg-hover); color: var(--text-secondary); }
+    .thinking-process svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.5; transition: transform 0.2s; }
+    .thinking-process.open svg:last-child { transform: rotate(90deg); }
+
+    .thinking-content {
+      font-size: 13px; color: var(--text-muted); background-color: var(--bg-sidebar);
+      padding: 12px 16px; border-radius: 10px; margin-bottom: 8px; display: none; border-left: 3px solid #F7D6A0;
+    }
+    .thinking-content.show { display: block; animation: msgIn 0.2s ease; }
+
+    .assistant-content { font-size: 15px; line-height: 1.7; color: var(--text-primary); }
+    .assistant-content p { margin-bottom: 16px; }
+    .assistant-content ul { margin-bottom: 16px; padding-left: 24px; list-style-type: disc; }
+    .assistant-content li { margin-bottom: 8px; }
+
+    .action-bar { display: flex; gap: 12px; margin-top: 4px; }
+    .action-icon {
+      background: none; border: none; cursor: pointer; padding: 6px; border-radius: 6px;
+      color: var(--text-muted); display: flex; align-items: center; justify-content: center; transition: background 0.15s, color 0.15s;
+    }
+    .action-icon:hover { background-color: var(--bg-hover); color: var(--text-primary); }
+    .action-icon svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+
+    /* ================= 流式输出光标 ================= */
+    .stream-cursor {
+      display: inline-block;
+      width: 7px;
+      height: 1.05em;
+      background: #9CA3AF;
+      margin-left: 2px;
+      vertical-align: -0.18em;
+      border-radius: 1.5px;
+      animation: cursorBlink 0.9s steps(1) infinite;
+    }
+    @keyframes cursorBlink {
+      0%, 49%   { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+
+    /* ================= 底部输入区（悬浮毛玻璃） ================= */
+    .input-wrapper {
+      padding: 12px 24px 24px;
+      display: flex; flex-direction: column; align-items: center;
+      flex-shrink: 0; z-index: 10;
+      position: relative;
+      background-color: transparent; 
+      border-top: none;
+      box-shadow: none;
+    }
+
+    .project-select {
+      display: inline-flex; align-items: center; gap: 8px;
+      background-color: rgba(255, 255, 255, 0.55);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border-radius: 16px 16px 0 0;
+      padding: 12px 20px; font-size: 14px; color: #111827;
+      font-weight: 500;
+      cursor: pointer; margin-bottom: -1px;
+      border: 1px solid rgba(255, 255, 255, 0.6); border-bottom: none;
+      width: 100%; max-width: var(--content-max-width); margin-left: auto; margin-right: auto;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .project-select:hover { background-color: rgba(255, 255, 255, 0.75); border-color: rgba(255, 255, 255, 0.8); }
+    .project-select svg { width: 16px; height: 16px; stroke: #111827; fill: none; stroke-width: 2; }
+
+    .input-pill {
+      width: 100%; max-width: var(--content-max-width);
+      background-color: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(32px) saturate(200%);
+      -webkit-backdrop-filter: blur(32px) saturate(200%);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 0 0 24px 24px;
+      padding: 16px 16px 12px 16px;
+      display: flex; flex-direction: column;
+      box-shadow: 0 12px 48px rgba(0, 0, 0, 0.08);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      position: relative;
+    }
+
+    .input-pill:focus-within {
+      border-color: #fff;
+      box-shadow: 0 12px 48px rgba(0, 0, 0, 0.12), 0 0 0 3px rgba(0, 0, 0, 0.02);
+    }
+
+    .input-pill textarea {
+      width: 100%; border: none; outline: none; resize: none;
+      font-size: 15px; line-height: 1.5; color: var(--text-primary);
+      background: transparent; min-height: 60px; max-height: 200px; padding: 0 0 16px 0;
+    }
+    .input-pill textarea::placeholder { color: #A1A1AA; }
+
+    .input-toolbar { display: flex; justify-content: space-between; align-items: center; }
+
+    .toolbar-left, .toolbar-right { display: flex; align-items: center; gap: 8px; }
+
+    .tool-btn {
+      display: flex; align-items: center; gap: 6px;
+      background: none; border: 1px solid transparent;
+      padding: 6px 12px; border-radius: 20px;
+      font-size: 14px; color: var(--text-secondary);
+      cursor: pointer; transition: all 0.15s;
+    }
+    .tool-btn:hover { background-color: var(--bg-hover); color: var(--text-primary); }
+    
+    .tool-btn.icon-only {
+      display: flex; align-items: center; justify-content: center;
+      background-color: transparent; border: 1px solid rgba(0, 0, 0, 0.12);
+      width: 32px; height: 32px;
+      padding: 0; border-radius: 50%; color: #888;
+      cursor: pointer; transition: all 0.15s;
+    }
+    .tool-btn.icon-only:hover { background-color: rgba(0, 0, 0, 0.04); color: #333; border-color: rgba(0, 0, 0, 0.2); }
+    .tool-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+    .send-btn {
+      width: 32px; height: 32px; border-radius: 50%; border: none;
+      background-color: #E5E5E5; 
+      display: flex; align-items: center; justify-content: center;
+      cursor: not-allowed; color: #FFFFFF; transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    }
+    .send-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.5; margin-top: 1px; }
+    
+    .input-pill.has-text .send-btn {
+      background-color: #111827;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .input-pill.has-text .send-btn:hover { transform: scale(1.05); }
+    .input-pill.has-text .send-btn:active { transform: scale(0.95); }
+
+    /* ================= 下拉菜单 ================= */
+    .dropdown-menu {
+      display: none;
+      flex-direction: column;
+    }
+    .dropdown-menu.show { display: flex; animation: dropdownIn 0.15s ease; }
+    @keyframes dropdownIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .dropdown-item {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 10px 14px; font-size: 14px; cursor: pointer; border-radius: 10px;
+      transition: background 0.15s;
+    }
+    .dropdown-item:hover { background: var(--bg-hover); }
+    .dropdown-item.selected { background: rgba(247, 214, 160, 0.18); }
+    .dropdown-item .check-icon { display: none; }
+    .dropdown-item.selected .check-icon { display: block; }
+
+    .dropdown-divider { height: 1px; background-color: var(--border-light); margin: 6px 0; }
+
+    .slider-container {
+      height: 6px; background-color: #E5E7EB; border-radius: 3px; position: relative; cursor: pointer;
+      margin-top: 8px;
+    }
+    .slider-fill {
+      position: absolute; left: 0; top: 0; height: 100%;
+      background: linear-gradient(90deg, #FFC46B, #FF9E4A);
+      border-radius: 3px;
+      transition: width 0.2s ease;
+      width: 100%;
+    }
+    .slider-thumb {
+      width: 16px; height: 16px; background-color: #fff;
+      border: 2px solid #111827; border-radius: 50%;
+      position: absolute; top: 50%; left: 100%;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+      transition: left 0.2s ease;
+      pointer-events: none;
+    }
+
+    /* 模型下拉面板（原 inline style 移至此处） */
+    #modelDropdown {
+      position: absolute;
+      bottom: 60px;
+      right: 16px;
+      background: #fff;
+      border: 1px solid var(--border-light);
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+      width: 280px;
+      padding: 8px;
+      z-index: 100;
+    }
+
+    /* ================= 底部版权 ================= */
+    .footer {
+      margin-top: 12px; font-size: 12px; color: var(--text-muted);
+      text-align: center; display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
+      align-items: center;
+    }
+    .footer a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+    .footer a:hover { text-decoration: underline; color: var(--text-primary); }
+    .footer .footer-divider { color: var(--text-muted); opacity: 0.6; }
+
+    /* ================= Toast ================= */
+    .toast {
+      position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(20px);
+      background: rgba(17, 24, 39, 0.92); color: white; padding: 10px 20px;
+      border-radius: 10px; font-size: 14px; opacity: 0; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none; z-index: 9999;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      max-width: 80vw;
+      text-align: center;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ================= 打字指示器 ================= */
+    .typing-dots { display: flex; gap: 4px; align-items: center; height: 24px; }
+    .typing-dots span {
+      width: 6px; height: 6px; background: #9CA3AF; border-radius: 50%;
+      animation: dotPulse 1.2s infinite ease-in-out;
+    }
+    .typing-dots span:nth-child(2) { animation-delay: 0.15s; }
+    .typing-dots span:nth-child(3) { animation-delay: 0.3s; }
+    @keyframes dotPulse {
+      0%, 60%, 100% { opacity: 0.3; transform: scale(0.85); }
+      30% { opacity: 1; transform: scale(1); }
+    }
+
+    /* ================= 富内容卡片 ================= */
+    .rich-card-message {
+      max-width: var(--content-max-width);
+      margin: 0 auto 24px;
+      animation: msgIn 0.3s ease both;
+      width: 100%;
+    }
+    .rich-card-message .card-label {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 12px; color: var(--text-muted); margin-bottom: 8px;
+      padding: 2px 10px;
+      background: var(--bg-sidebar);
+      border-radius: 20px;
+    }
+    .rich-card-message .card-body {
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    /* ==================================================================
+       响应式设计
+       ================================================================== */
+
+    /* ---------- 平板横屏 / 小笔记本 ---------- */
+    @media (max-width: 1024px) {
+      :root {
+        --sidebar-width: 240px;
+        --content-max-width: 720px;
+      }
+      .cards-grid { gap: 16px; }
+      .welcome-title { font-size: 36px; }
+    }
+
+    /* ---------- 平板竖屏 / 大屏手机：侧边栏变抽屉 ---------- */
+    @media (max-width: 900px) {
+      .mobile-menu-btn { display: flex; }
+
+      .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        height: 100vh;
+        height: 100dvh;
+        width: min(300px, 84vw);
+        min-width: min(300px, 84vw);
+        z-index: 100;
+        transform: translateX(-100%);
+        transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.32s ease;
+        box-shadow: none;
+        will-change: transform;
+      }
+      .sidebar.mobile-open {
+        transform: translateX(0);
+        box-shadow: 6px 0 32px rgba(0, 0, 0, 0.16);
+      }
+
+      /* 移动端忽略 collapsed 状态，恢复完整布局 */
+      .sidebar.collapsed {
+        width: min(300px, 84vw);
+        min-width: min(300px, 84vw);
+      }
+      .sidebar.collapsed .logo-text,
+      .sidebar.collapsed .nav-text,
+      .sidebar.collapsed .sidebar-footer span { display: inline; }
+      .sidebar.collapsed .section-title {
+        display: flex;
+        justify-content: space-between;
+        padding: 24px 16px 8px;
+      }
+      .sidebar.collapsed .sidebar-header {
+        flex-direction: row;
+        gap: 0;
+        align-items: center;
+        padding: 16px 16px 8px;
+      }
+      .sidebar.collapsed .nav-item {
+        justify-content: flex-start;
+        padding: 10px 12px;
+      }
+      .sidebar.collapsed .nav-item .nav-badge { display: inline-block; }
+      .sidebar.collapsed .recent-section { display: flex; }
+
+      /* 触摸区域加大 */
+      .nav-item { padding: 12px 14px; font-size: 15px; }
+      .recent-item { padding: 12px 14px; }
+      .icon-btn { padding: 8px; }
+      .sidebar-footer {
+        padding: 16px 16px calc(16px + env(safe-area-inset-bottom, 0px));
+      }
+
+      /* 顶部栏 */
+      .top-bar { height: 52px; padding: 0 12px; gap: 4px; }
+      .top-link { padding: 8px 10px; }
+
+      /* 欢迎页 */
+      .welcome-screen { padding: 28px 20px 32px; }
+      .welcome-bg { height: 240px; }
+      .welcome-title { font-size: 32px; }
+      .welcome-subtitle { font-size: 14px; margin-bottom: 28px; }
+
+      .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+        margin-bottom: 40px;
+      }
+      .cards-grid .card:nth-child(4) {
+        grid-column: auto;
+        margin-left: 0;
+      }
+      .cards-grid .card:nth-child(5) {
+        grid-column: 1 / -1;
+        justify-self: center;
+        width: min(100%, calc(50% - 7px));
+        margin-right: 0;
+      }
+
+      /* 聊天区 */
+      .chat-container { padding: 16px 14px; }
+      .message { margin-bottom: 24px; }
+      .message.user .msg-bubble {
+        max-width: 88%;
+        font-size: 14px;
+        padding: 10px 16px;
+      }
+      .assistant-content { font-size: 14px; }
+
+      /* 输入区 */
+      .input-wrapper {
+        padding: 8px 12px calc(12px + env(safe-area-inset-bottom, 0px));
+      }
+      .project-select {
+        padding: 10px 16px;
+        font-size: 13px;
+        border-radius: 14px 14px 0 0;
+      }
+      .input-pill {
+        border-radius: 0 0 20px 20px;
+        padding: 12px 12px 10px;
+      }
+      /* 防止 iOS 聚焦输入框时页面缩放 */
+      .input-pill textarea { font-size: 16px; min-height: 52px; }
+      .send-btn { width: 36px; height: 36px; }
+      .send-btn svg { width: 18px; height: 18px; }
+      .tool-btn.icon-only { width: 36px; height: 36px; }
+
+      /* 模型下拉：窄屏自适应宽度 */
+      #modelDropdown {
+        left: 8px;
+        right: 8px;
+        width: auto;
+        bottom: 64px;
+        max-height: 60vh;
+        overflow-y: auto;
+      }
+
+      /* 页脚 */
+      .footer { font-size: 11px; gap: 4px 6px; line-height: 1.7; }
+
+      /* Toast 安全区 */
+      .toast { bottom: calc(20px + env(safe-area-inset-bottom, 0px)); }
+
+      /* 卡片触摸反馈 */
+      .card:active { transform: scale(0.985); background-color: #EFEFEF; }
+    }
+
+    /* ---------- 手机 ---------- */
+    @media (max-width: 600px) {
+      .welcome-screen { padding: 20px 16px 24px; }
+      .welcome-bg { height: 200px; }
+      .welcome-title { font-size: 27px; letter-spacing: 0.2px; }
+      .welcome-subtitle { font-size: 13.5px; margin-bottom: 24px; }
+
+      .cards-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-bottom: 28px;
+      }
+      .cards-grid .card:nth-child(5) {
+        grid-column: auto;
+        justify-self: stretch;
+        width: 100%;
+      }
+      .card-img { aspect-ratio: 16 / 9; font-size: 30px; }
+      .card { padding: 10px; }
+
+      .top-bar { height: 48px; }
+      .top-link { font-size: 13px; }
+      .top-link svg { width: 11px; height: 11px; }
+
+      .chat-container { padding: 12px 10px; }
+      .message.user .msg-bubble { max-width: 92%; }
+
+      .project-select { font-size: 12.5px; padding: 9px 14px; }
+      .thinking-content { font-size: 12.5px; padding: 10px 12px; }
+      .action-bar { gap: 8px; }
+    }
+
+    /* ---------- 超小屏 ---------- */
+    @media (max-width: 380px) {
+      .welcome-title { font-size: 23px; }
+      .welcome-subtitle { font-size: 12.5px; }
+      .input-toolbar { flex-wrap: wrap; gap: 6px; }
+      #currentModelName {
+        max-width: 92px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: inline-block;
+        vertical-align: bottom;
+      }
+      .footer { font-size: 10.5px; }
+    }
+
+    /* ---------- 横屏矮屏 ---------- */
+    @media (max-height: 520px) and (orientation: landscape) {
+      .welcome-screen { padding-top: 14px; }
+      .welcome-title { font-size: 24px; margin-bottom: 4px; }
+      .welcome-subtitle { margin-bottom: 14px; }
+      .cards-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-bottom: 16px;
+      }
+      .cards-grid .card:nth-child(4) {
+        grid-column: auto;
+        margin-left: 0;
+      }
+      .cards-grid .card:nth-child(5) {
+        grid-column: auto;
+        justify-self: stretch;
+        width: 100%;
+        margin-right: 0;
+      }
+      .card-img { aspect-ratio: 16 / 9; font-size: 24px; }
+      .welcome-bg { height: 140px; }
+    }
+
+    /* ---------- 触摸设备：消除 hover 粘滞，改用 active 反馈 ---------- */
+    @media (hover: none) {
+      .card:hover {
+        transform: none;
+        box-shadow: none;
+        background-color: var(--bg-card);
+        border-color: transparent;
+      }
+      .card:active {
+        transform: scale(0.985);
+        background-color: #EFEFEF;
+      }
+      .recent-item:hover { background-color: transparent; }
+      .recent-item:active { background-color: var(--bg-hover); }
+      .nav-item:hover { background-color: transparent; }
+      .nav-item:active { background-color: var(--bg-hover); }
+      .top-link:hover { background-color: transparent; color: var(--text-secondary); }
+      .top-link:active { background-color: var(--bg-hover); color: var(--text-primary); }
+      .tool-btn:hover { background-color: transparent; color: var(--text-secondary); }
+      .tool-btn:active { background-color: var(--bg-hover); color: var(--text-primary); }
+      .action-icon:hover { background-color: transparent; color: var(--text-muted); }
+      .action-icon:active { background-color: var(--bg-hover); color: var(--text-primary); }
+      .icon-btn:hover { background-color: transparent; color: var(--text-secondary); }
+      .icon-btn:active { background-color: var(--bg-hover); color: var(--text-primary); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= 移动端遮罩 ================= -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- ================= 侧边栏 ================= -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="logo-area">
+        <div class="logo-icon">Z</div>
+        <span class="logo-text">Z.ai</span>
+      </div>
+      <button class="icon-btn" id="sidebarToggle" title="收起侧边栏">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+      </button>
+    </div>
+
+    <div class="sidebar-nav">
+      <div class="nav-item active" id="navHome">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span class="nav-text">主页</span>
+      </div>
+      <div class="nav-item" id="navTask">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span class="nav-text">定时任务</span>
+        <span class="nav-badge">🎂</span>
+      </div>
+      <div class="nav-item" id="navCloud">
+        <svg viewBox="0 0 24 24"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z"/></svg>
+        <span class="nav-text">云盘</span>
+      </div>
+    </div>
+
+    <!-- ================= 最近会话区域 ================= -->
+    <div class="sidebar-divider"></div>
+
+    <div class="recent-section">
+      <div class="section-title">
+        <span class="nav-text">最近</span>
+        <div class="more-tooltip-wrap">
+          <button class="icon-btn recent-more-btn">
+            <svg viewBox="0 0 24 24" style="width: 18px; height: 18px;"><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/><circle cx="5" cy="12" r="1.5"/></svg>
+          </button>
+          <div class="tooltip-box">更多</div>
+        </div>
+      </div>
+      
+      <div class="recent-list" id="recentList">
+        <div class="recent-item" data-topic="party">
+          <span class="item-title">给天乐的生日派对报名网站</span>
+          <div class="item-actions" title="操作">
+            <svg viewBox="0 0 24 24" style="width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2;"><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/><circle cx="5" cy="12" r="1.5"/></svg>
+          </div>
+        </div>
+        <div class="recent-item" data-topic="poem">
+          <span class="item-title">天乐专属生日祝词</span>
+          <div class="item-actions" title="操作">
+            <svg viewBox="0 0 24 24" style="width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2;"><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/><circle cx="5" cy="12" r="1.5"/></svg>
+          </div>
+        </div>
+        <div class="recent-item" data-topic="insight">
+          <span class="item-title">天乐生日专属数据分析</span>
+          <div class="item-actions" title="操作">
+            <svg viewBox="0 0 24 24" style="width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2;"><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/><circle cx="5" cy="12" r="1.5"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ================= 最近会话区域结束 ================= -->
+
+    <div class="section-title" id="projectToggle">
+      <span class="nav-text">项目</span>
+      <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+
+    <div class="nav-item" id="navNewProject">
+      <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      <span class="nav-text">新建项目</span>
+    </div>
+
+    <div class="sidebar-spacer"></div>
+
+    <div class="sidebar-footer" id="navSettings">
+      <div class="user-info">
+        <div class="avatar">🎂</div>
+        <span>旅行者1019</span>
+      </div>
+      <button class="icon-btn">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ================= 主区域 ================= -->
+  <main class="main">
+    <header class="top-bar">
+      <button class="icon-btn mobile-menu-btn" id="mobileMenuBtn" title="打开菜单" aria-label="打开菜单">
+        <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <a class="top-link" id="btnZCode">ZCode <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
+      <a class="top-link" id="btnAPI">API <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
+    </header>
+
+    <div class="welcome-screen" id="welcomeScreen">
+      <div class="welcome-bg"></div>
+      <h1 class="welcome-title">More than coding...</h1>
+      <p class="welcome-subtitle">今天，更为 <span class="heart">杨天乐</span> 同学点亮生日蜡烛 🎂</p>
+
+      <div class="cards-grid">
+        <div class="card" id="card1"><div class="card-img">💻</div><div class="card-title">全栈开发</div></div>
+        <div class="card" id="card2"><div class="card-img">📝</div><div class="card-title">智能写作</div></div>
+        <div class="card" id="card3"><div class="card-img">📊</div><div class="card-title">数据洞察</div></div>
+        <div class="card" id="card4"><div class="card-img">📈</div><div class="card-title">商业分析</div></div>
+        <div class="card" id="card5"><div class="card-img">🎨</div><div class="card-title">灵感画板</div></div>
+      </div>
+    </div>
+
+    <div class="chat-container" id="chatArea"></div>
+
+    <div class="input-wrapper">
+      <div class="project-select" id="projectSelect">
+        <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+        <span id="projectSelectText">选择项目</span>
+      </div>
+
+      <div class="input-pill" id="inputPill">
+        <textarea id="userInput" rows="2" placeholder="对天乐说点什么吧，或者问我怎么给他过生日..."></textarea>
+
+        <div class="input-toolbar">
+          <div class="toolbar-left">
+            <button class="tool-btn icon-only" id="addAttachmentBtn" title="添加生日礼物附件">
+              <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+          <div class="toolbar-right">
+            <button class="tool-btn" id="modelBtn">
+              <span id="currentModelName">GLM-5.3-Flash</span>
+              <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <button class="send-btn" id="sendBtn" disabled>
+              <svg viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- 模型下拉面板（样式已移至 CSS） -->
+        <div class="dropdown-menu" id="modelDropdown">
+          <div class="dropdown-item model-select selected" data-model="GLM-5.3-Flash" data-birthday="⚡ 闪电生日祝福模式：每秒生成 62 句祝福语">
+            <span>GLM-5.3-Flash</span>
+            <svg viewBox="0 0 24 24" class="check-icon" style="width:18px;height:18px;stroke:#111827;stroke-width:2;fill:none;"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="dropdown-item model-select" data-model="GLM-5.3" data-birthday="🧠 深度思考生日模式：会为天乐写一首长诗">
+            <span>GLM-5.3</span>
+            <svg viewBox="0 0 24 24" class="check-icon" style="width:18px;height:18px;stroke:#111827;stroke-width:2;fill:none;"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="dropdown-item model-select" data-model="GLM-5.2" data-birthday="🎈 经典生日模式：稳稳当当送上一份祝福">
+            <span>GLM-5.2</span>
+            <svg viewBox="0 0 24 24" class="check-icon" style="width:18px;height:18px;stroke:#111827;stroke-width:2;fill:none;"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="dropdown-divider"></div>
+          <div class="model-settings" style="padding: 8px 14px 12px;">
+            <div class="settings-label" style="font-size: 13px; color: var(--text-secondary); margin-bottom: 12px; display: flex; justify-content: space-between;">
+              <span>思考强度</span>
+              <span id="strengthText" style="color: var(--text-primary); font-weight: 600;">最高</span>
+            </div>
+            <div class="slider-container" id="strengthSlider">
+              <div class="slider-fill" id="sliderFill"></div>
+              <div class="slider-thumb" id="sliderThumb"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <span>以上生日祝福均由 AI 生成，祝天乐天天开心。</span>
+        <span class="footer-divider">·</span>
+        <a href="#" id="footerLink">🎂 计62生日特别备案版</a>
+        <span class="footer-divider">·</span>
+        <a href="#" id="footerLink2">📖 天乐的代码成长博客</a>
+        <span class="footer-divider">·</span>
+        <a href="#" id="footerLink3">🎈 联系计62庆生委员会</a>
+        <span class="footer-divider">·</span>
+        <a href="#" id="footerLink4">🍰 吃蛋糕协议</a>
+        <span class="footer-divider">和</span>
+        <a href="#" id="footerLink5">🤫 惊喜保密政策</a>
+      </div>
+    </div>
+  </main>
+
+  <div id="toast" class="toast">提示消息</div>
+
+  <script>
+    // ================= 日期守卫：仅 10 月 29 日仿真模型才工作 =================
+    function isBirthdayToday() {
+      const now = new Date();
+      return now.getMonth() === 9 && now.getDate() === 29; // 10 月 29 日
+    }
+
+    const NON_BIRTHDAY_REPLY = '<p>zzz......</p>';
+
+    // ================= 生日文案库 =================
+    const BIRTHDAY_MESSAGES = [
+      'GLM 与计62共同祝杨天乐同学生日快乐呀~🎂',
+      '杨天乐同学，生日快乐！愿新的一岁代码不报错，生活不内耗，天天开心~',
+      '今天是属于杨天乐的特别日子！GLM 和计62一起祝你生日快乐，万事顺意🌟',
+      '祝杨天乐同学生日快乐！愿你每一岁都奔走在自己的热爱里，计62永远是你坚强的后盾~',
+      '杨天乐，生日快乐呀！愿你新的一岁 GPA 狂飙，头发浓密，快乐加倍！',
+      'GLM 携计62全体同学，祝杨天乐同学生日快乐！愿你的未来比 5.3 模型还要闪耀✨',
+      '杨天乐同学，生辰快乐！愿你写下的每一行代码都跑通，许下的每一个愿望都成真。',
+      '生日快乐，杨天乐！愿你在计62的每一天都值得回忆，在新的一岁里继续闪闪发光。',
+      '叮！杨天乐同学的生日祝福已送达——GLM 和计62祝你岁岁平安，年年有今日~🎉',
+      '杨天乐，生日快乐！愿你像 GLM 一样不断进化，像计62一样温暖可靠。',
+      '祝杨天乐同学生日快乐！愿你新的一岁 debug 顺利，offer 多多，快乐满满。',
+      'GLM 与计62共同举杯：杨天乐同学，生日快乐！愿你永远年轻，永远热泪盈眶。',
+      '杨天乐同学，今天是你的日子！愿所有的美好都如期而至，计62陪你一起庆祝~',
+      '生日快乐呀杨天乐！愿你的生活像运行完美的程序一样，没有 bug，只有惊喜。',
+      '杨天乐，生辰快乐！GLM 和计62祝你所求皆如愿，所行皆坦途，所遇皆温暖。',
+      '祝杨天乐同学生日快乐！愿你新的一岁里，代码优雅，睡眠充足，笑容灿烂。',
+      '杨天乐同学，生日快乐！计62 和 GLM 一起为你点亮今天的蜡烛，愿你永远被爱包围🕯️',
+      'Happy Birthday, 杨天乐！愿你在计62的时光成为最珍贵的记忆，未来一路生花。',
+      '杨天乐，生日快乐！愿你像今天的阳光一样明亮，像 GLM 的回复一样温暖可靠。',
+      'GLM 与计62最后再祝一次：杨天乐同学，生日快乐！岁岁常欢愉，年年皆胜意~🎈'
+    ];
+
+    const BIRTHDAY_KEYWORDS = [
+      '生日', '生日快乐', 'happy birthday', 'birthday', '诞辰', '生辰',
+      '蛋糕', '蜡烛', '许愿', '祝福', '快乐', '庆祝', 'party',
+      '年龄', '岁', '长大', '杨天乐', '天乐', '计62', '过生'
+    ];
+
+    function isBirthdayRelated(text) {
+      const lower = text.toLowerCase().trim();
+      if (!lower) return false;
+      return BIRTHDAY_KEYWORDS.some(kw => lower.includes(kw.toLowerCase()));
+    }
+
+    // ================= DOM =================
+    const welcomeScreen = document.getElementById('welcomeScreen');
+    const chatArea = document.getElementById('chatArea');
+    const userInput = document.getElementById('userInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const inputPill = document.getElementById('inputPill');
+    const modelDropdown = document.getElementById('modelDropdown');
+    const strengthSlider = document.getElementById('strengthSlider');
+    const sliderThumb = document.getElementById('sliderThumb');
+    const sliderFill = document.getElementById('sliderFill');
+    const strengthText = document.getElementById('strengthText');
+    const currentModelName = document.getElementById('currentModelName');
+
+    let birthdayIndex = 0;
+    let isTyping = false;
+    let currentStrength = 4;
+
+    // ================= 通用 =================
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(toast._timer);
+      toast._timer = setTimeout(() => toast.classList.remove('show'), 2600);
+    }
+
+    function scrollToBottom() {
+      requestAnimationFrame(() => {
+        chatArea.scrollTop = chatArea.scrollHeight;
+      });
+    }
+
+    // ================= 流式打字机渲染 =================
+    function typeHTML(container, html, { speed = 16, onDone } = {}) {
+      const tokens = [];
+      let i = 0;
+      while (i < html.length) {
+        if (html[i] === '<') {
+          const end = html.indexOf('>', i);
+          if (end !== -1) {
+            tokens.push(html.slice(i, end + 1));
+            i = end + 1;
+            continue;
+          }
+        }
+        tokens.push(html[i]);
+        i += 1;
+      }
+
+      const textLen = tokens.reduce((n, t) => n + (t.length === 1 ? 1 : 0), 0);
+      const perStep = Math.max(1, Math.ceil(textLen / 90));
+
+      let idx = 0;
+      let rendered = '';
+      const cursor = '<span class="stream-cursor"></span>';
+      container.innerHTML = cursor;
+
+      function step() {
+        if (idx >= tokens.length) {
+          container.innerHTML = html;
+          if (onDone) onDone();
+          return;
+        }
+        let chars = 0;
+        while (idx < tokens.length && chars < perStep) {
+          const t = tokens[idx++];
+          rendered += t;
+          if (t.length === 1) chars += 1;
+        }
+        container.innerHTML = rendered + cursor;
+        scrollToBottom();
+        setTimeout(step, speed);
+      }
+      step();
+    }
+
+    function switchToChatMode() {
+      if (welcomeScreen.style.display !== 'none') {
+        welcomeScreen.style.display = 'none';
+        chatArea.classList.add('active');
+      }
+    }
+
+    function addSystemMessage(text) {
+      switchToChatMode();
+      const wrapper = document.createElement('div');
+      wrapper.className = 'message system';
+      wrapper.style.cssText = 'justify-content: center; margin-bottom: 20px; animation: msgIn 0.2s ease;';
+      const bubble = document.createElement('div');
+      bubble.className = 'msg-bubble';
+      bubble.style.cssText = 'background-color: transparent; color: var(--text-muted); font-size: 13px; text-align: center;';
+      bubble.textContent = text;
+      wrapper.appendChild(bubble);
+      chatArea.appendChild(wrapper);
+      scrollToBottom();
+    }
+
+    // ================= 富卡片消息 =================
+    function createCardMessage(cardHTML, label = '') {
+      switchToChatMode();
+
+      // 非 10 月 29 日：仿真模型休眠，所有富内容输出统一为 zzz......
+      if (!isBirthdayToday()) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'rich-card-message';
+        const labelHTML = label
+          ? `<div class="card-label"><span>💤</span>${label}</div>`
+          : '';
+        wrapper.innerHTML = `${labelHTML}<div class="card-body" style="background:#fff;border:1px solid #EEE;border-radius:14px;padding:24px;text-align:center;font-family:'SF Mono',Consolas,monospace;font-size:15px;color:#999;letter-spacing:1px;">zzz......</div>`;
+        chatArea.appendChild(wrapper);
+        scrollToBottom();
+        return wrapper;
+      }
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'rich-card-message';
+      const labelHTML = label
+        ? `<div class="card-label"><span>🎂</span>${label}</div>`
+        : '';
+      wrapper.innerHTML = `${labelHTML}<div class="card-body">${cardHTML}</div>`;
+      chatArea.appendChild(wrapper);
+      scrollToBottom();
+      return wrapper;
+    }
+
+    // ================= 62 配色生日 SVG =================
+    function generate62ColorBirthdaySVG() {
+      const columnHues = [5, 30, 50, 95, 175, 215, 270, 325];
+      const cols = 8, rows = 8;
+      const cellW = 100, cellH = 60;
+
+      let rects = '';
+      let colorCount = 0;
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const idx = r * cols + c;
+          const x = c * cellW + 3;
+          const y = r * cellH + 3;
+          if (idx < 62) {
+            const hue = (columnHues[c] + (r - 3.5) * 2.5 + 360) % 360;
+            const sat = 70 + (r % 3) * 8;
+            const light = 62 + (r % 4) * 4;
+            rects += `<rect x="${x}" y="${y}" width="94" height="54" rx="10" fill="hsl(${hue.toFixed(0)},${sat}%,${light}%)" opacity="0.72"/>`;
+            colorCount++;
+          } else {
+            rects += `<rect x="${x}" y="${y}" width="94" height="54" rx="10" fill="#F2F2F2" stroke="#DDD" stroke-width="1" stroke-dasharray="4 3"/>`;
+          }
+        }
+      }
+
+      const cake = `
+        <g transform="translate(400, 200)">
+          <rect x="-85" y="40" width="170" height="60" rx="10" fill="#F8CFA8" stroke="#E8A87C" stroke-width="2.5"/>
+          <rect x="-85" y="40" width="170" height="14" fill="#FDE5D3"/>
+          <circle cx="-70" cy="100" r="6" fill="#fff"/>
+          <circle cx="-46" cy="100" r="6" fill="#fff"/>
+          <circle cx="-22" cy="100" r="6" fill="#fff"/>
+          <circle cx="2" cy="100" r="6" fill="#fff"/>
+          <circle cx="26" cy="100" r="6" fill="#fff"/>
+          <circle cx="50" cy="100" r="6" fill="#fff"/>
+          <circle cx="70" cy="100" r="6" fill="#fff"/>
+          <rect x="-65" y="-8" width="130" height="55" rx="10" fill="#FBD3B0" stroke="#E8A87C" stroke-width="2.5"/>
+          <rect x="-65" y="-8" width="130" height="12" fill="#FDE6D3"/>
+          <circle cx="-52" cy="47" r="5" fill="#fff"/>
+          <circle cx="-30" cy="47" r="5" fill="#fff"/>
+          <circle cx="-8" cy="47" r="5" fill="#fff"/>
+          <circle cx="14" cy="47" r="5" fill="#fff"/>
+          <circle cx="36" cy="47" r="5" fill="#fff"/>
+          <circle cx="52" cy="47" r="5" fill="#fff"/>
+          <rect x="-42" y="-50" width="84" height="48" rx="8" fill="#FFE0C4" stroke="#E8A87C" stroke-width="2.5"/>
+          <rect x="-42" y="-50" width="84" height="11" fill="#FFEEDD"/>
+          <rect x="-30" y="-92" width="8" height="42" rx="3" fill="#7ED6DF"/>
+          <ellipse cx="-26" cy="-98" rx="5" ry="9" fill="#FFD93D"/>
+          <ellipse cx="-26" cy="-98" rx="2.5" ry="5" fill="#FFF3B0"/>
+          <rect x="-4" y="-92" width="8" height="42" rx="3" fill="#FF9F43"/>
+          <ellipse cx="0" cy="-98" rx="5" ry="9" fill="#FFD93D"/>
+          <ellipse cx="0" cy="-98" rx="2.5" ry="5" fill="#FFF3B0"/>
+          <rect x="22" y="-92" width="8" height="42" rx="3" fill="#A29BFE"/>
+          <ellipse cx="26" cy="-98" rx="5" ry="9" fill="#FFD93D"/>
+          <ellipse cx="26" cy="-98" rx="2.5" ry="5" fill="#FFF3B0"/>
+          <circle cx="-14" cy="-55" r="5" fill="#FF4D6D"/>
+          <circle cx="14" cy="-55" r="5" fill="#FF4D6D"/>
+        </g>
+      `;
+
+      return `
+        <svg viewBox="0 0 800 480" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;background:#fff;">
+          <defs>
+            <filter id="bdShadow" x="-10%" y="-10%" width="120%" height="120%">
+              <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="rgba(0,0,0,0.12)"/>
+            </filter>
+          </defs>
+          ${rects}
+          <circle cx="400" cy="230" r="190" fill="#FFFFFF" opacity="0.95" filter="url(#bdShadow)"/>
+          ${cake}
+          <text x="400" y="330" text-anchor="middle" font-family="'Crimson Text','Noto Serif SC',serif" font-size="30" font-weight="600" fill="#222" letter-spacing="2">HAPPY BIRTHDAY</text>
+          <text x="400" y="372" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="22" font-weight="500" fill="#555" letter-spacing="6">杨 天 乐</text>
+          <text x="400" y="408" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#999" letter-spacing="1">62 colors · 62 classmates · 1 special day</text>
+        </svg>
+      `;
+    }
+
+    function renderInspirationBoard() {
+      const html = `
+        <div style="background:#fff;border-radius:14px;padding:16px;border:1px solid #EEE;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+            <div style="display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:#333;">
+              <span style="font-size:18px;">🎨</span> 生日派对灵感板
+            </div>
+            <div style="font-size:12px;color:#999;">62 种配色 · 已铺满</div>
+          </div>
+          ${generate62ColorBirthdaySVG()}
+          <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;">
+            ${['#FF6B6B','#FFB84D','#6DD5A8','#7CA5FF','#A29BFE','#FF9FF3'].map(c => `<span style="width:20px;height:20px;border-radius:6px;background:${c};display:inline-block;"></span>`).join('')}
+            <span style="font-size:12px;color:#999;margin-left:4px;">+ 56 more colors</span>
+          </div>
+        </div>
+      `;
+      createCardMessage(html, '灵感画板');
+    }
+
+    // ================= 全栈开发 - 派对报名网站 =================
+    function renderPartySite() {
+      const html = `
+        <div style="background:linear-gradient(135deg,#FFF5E6,#FFE9D6);border-radius:14px;padding:20px;border:1px solid #F5D9B8;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+            <div style="width:36px;height:36px;border-radius:10px;background:#FFB84D;display:flex;align-items:center;justify-content:center;font-size:20px;">🎉</div>
+            <div>
+              <div style="font-weight:600;font-size:15px;color:#5A3A1A;">杨天乐生日派对 · 报名处</div>
+              <div style="font-size:12px;color:#9A7A5A;">Party Registration · 2025</div>
+            </div>
+          </div>
+          <div style="background:#fff;border-radius:12px;padding:16px;text-align:center;margin-bottom:14px;">
+            <div style="font-family:'Crimson Text',serif;font-size:22px;color:#333;margin-bottom:6px;">Happy Birthday, 天乐!</div>
+            <div style="font-size:13px;color:#888;">🕗 今天 · 📍 计62实验室 · 🎂 蛋糕已就位</div>
+          </div>
+          <div style="display:flex;gap:8px;margin-bottom:12px;">
+            <input style="flex:1;padding:10px 14px;border:1px solid #F0D5B5;border-radius:10px;font-size:13px;background:#fff;outline:none;" placeholder="你的名字" value="旅行者1019" readonly>
+            <button style="padding:10px 18px;background:#FF9F43;color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;">我要来！</button>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#9A7A5A;">
+            <span>🎊 已有 <b style="color:#FF6B35;">62</b> 位同学报名</span>
+            <span>剩余名额：不限</span>
+          </div>
+        </div>
+      `;
+      createCardMessage(html, '全栈开发 · 生日派对报名网站');
+    }
+
+    // ================= 智能写作 - 打字机祝词 =================
+    function renderPoem() {
+      const poem = `致 杨天乐：
+
+愿你今日吹蜡烛时，
+许下的每个愿望都被温柔接住；
+
+愿你写下的每行代码，
+在未来的某一天都优雅跑通；
+
+愿 62 份同学的祝福，
+汇成你新一岁最温暖的开场；
+
+愿你像 5.3 模型一样，
+越来越闪耀，越来越好。`;
+      const html = `
+        <div style="background:#FFFDF8;border-radius:14px;padding:22px;border:1px solid #F0E6D8;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;font-size:13px;color:#B8860B;font-weight:600;">
+            <span style="font-size:16px;">✍️</span> 智能写作 · 正在为天乐生成专属祝词
+          </div>
+          <div id="typewriterOutput" style="font-family:'Noto Serif SC',serif;font-size:15px;line-height:1.95;color:#3A3020;white-space:pre-wrap;min-height:220px;"></div>
+          <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap;">
+            <span style="font-size:12px;padding:4px 10px;background:#F5EBD8;border-radius:20px;color:#8B6B3A;">字数：${poem.length}</span>
+            <span style="font-size:12px;padding:4px 10px;background:#F5EBD8;border-radius:20px;color:#8B6B3A;">生成用时：0.62s</span>
+            <span style="font-size:12px;padding:4px 10px;background:#F5EBD8;border-radius:20px;color:#8B6B3A;">风格：温暖 / 代码</span>
+          </div>
+        </div>
+      `;
+      createCardMessage(html, '智能写作 · 专属生日祝词');
+      setTimeout(() => {
+        const el = document.getElementById('typewriterOutput');
+        if (!el) return;
+        let i = 0;
+        const timer = setInterval(() => {
+          el.textContent = poem.slice(0, i);
+          i += 2;
+          if (i > poem.length) {
+            clearInterval(timer);
+            el.textContent = poem;
+          }
+          scrollToBottom();
+        }, 25);
+      }, 100);
+    }
+
+    // ================= 数据洞察 - 柱状图 =================
+    function renderDataInsight() {
+      const metrics = [
+        { label: '颜值', value: 100, max: 100, color: '#FF6B9D', emoji: '😎', display: '100%' },
+        { label: '快乐指数', value: 200, max: 200, color: '#FFB84D', emoji: '😆', display: '200% 爆表' },
+        { label: 'GPA 飙升', value: 88, max: 100, color: '#6DD5A8', emoji: '📈', display: '88%' },
+        { label: '代码不报错', value: 95, max: 100, color: '#7CA5FF', emoji: '💻', display: '95%' }
+      ];
+      const W = 520, H = 320;
+      const labelW = 100, chartW = 340, chartX = 116;
+      const rowH = 36, gap = 16, topY = 70;
+
+      let bars = '';
+      metrics.forEach((m, i) => {
+        const y = topY + i * (rowH + gap);
+        const pct = Math.min(m.value / m.max, 1);
+        const w = chartW * pct;
+        bars += `<rect x="${chartX}" y="${y}" width="${chartW}" height="${rowH}" rx="8" fill="#F5F5F5"/>`;
+        bars += `<rect x="${chartX}" y="${y}" width="${w}" height="${rowH}" rx="8" fill="${m.color}" opacity="0.92"/>`;
+        bars += `<text x="${labelW + 10}" y="${y + rowH/2 + 6}" text-anchor="end" font-family="sans-serif" font-size="14" fill="#333" font-weight="500">${m.emoji} ${m.label}</text>`;
+        bars += `<text x="${chartX + w - 12}" y="${y + rowH/2 + 6}" text-anchor="end" font-family="sans-serif" font-size="14" fill="#fff" font-weight="700">${m.display}</text>`;
+      });
+
+      const svg = `
+        <svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;">
+          <text x="${W/2}" y="28" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="16" fill="#333" font-weight="600">今日天乐专属数据</text>
+          <text x="${W/2}" y="48" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#999">数据来源：计62庆生委员会 × GLM-5.3 · 今日统计</text>
+          ${bars}
+          <text x="${W/2}" y="${H - 12}" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#AAA">* 快乐指数已超过量程，图表已尽力 🤯</text>
+        </svg>
+      `;
+
+      const html = `
+        <div style="background:#fff;border-radius:14px;padding:16px;border:1px solid #EEE;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:14px;font-weight:600;color:#333;">
+            <span style="font-size:18px;">📊</span> 数据洞察 · 杨天乐生日专属分析报告
+          </div>
+          ${svg}
+        </div>
+      `;
+      createCardMessage(html, '数据洞察 · 天乐专属报告');
+    }
+
+    // ================= 商业分析 - 筹备状态 =================
+    function renderBusinessAnalysis() {
+      const html = `
+        <div style="background:#fff;border-radius:14px;padding:16px;border:1px solid #EEE;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;font-size:14px;font-weight:600;color:#333;">
+            <span style="font-size:18px;">📈</span> 商业分析 · 生日派对筹备分析
+          </div>
+          <table style="width:100%;border-collapse:collapse;font-size:13px;">
+            <thead>
+              <tr style="border-bottom:2px solid #F0F0F0;">
+                <th style="text-align:left;padding:8px 4px;color:#888;font-weight:500;">筹备项</th>
+                <th style="text-align:right;padding:8px 4px;color:#888;font-weight:500;">状态</th>
+                <th style="text-align:right;padding:8px 4px;color:#888;font-weight:500;">说明</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid #F5F5F5;">
+                <td style="padding:10px 4px;">🎂 生日蛋糕</td>
+                <td style="text-align:right;padding:10px 4px;color:#4CAF50;font-weight:600;">已完成</td>
+                <td style="text-align:right;padding:10px 4px;color:#999;">已就位</td>
+              </tr>
+              <tr style="border-bottom:1px solid #F5F5F5;">
+                <td style="padding:10px 4px;">🎁 惊喜礼物</td>
+                <td style="text-align:right;padding:10px 4px;color:#4CAF50;font-weight:600;">已完成</td>
+                <td style="text-align:right;padding:10px 4px;color:#999;">62 份祝福已收集</td>
+              </tr>
+              <tr style="border-bottom:1px solid #F5F5F5;">
+                <td style="padding:10px 4px;">🎈 气球装饰</td>
+                <td style="text-align:right;padding:10px 4px;color:#4CAF50;font-weight:600;">已完成</td>
+                <td style="text-align:right;padding:10px 4px;color:#999;">手工 DIY</td>
+              </tr>
+              <tr style="border-bottom:1px solid #F5F5F5;">
+                <td style="padding:10px 4px;">🏫 派对场地</td>
+                <td style="text-align:right;padding:10px 4px;color:#4CAF50;font-weight:600;">已完成</td>
+                <td style="text-align:right;padding:10px 4px;color:#999;">计62实验室</td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="margin-top:14px;padding:14px;background:linear-gradient(135deg,#FFF8E6,#FFEFD1);border-radius:12px;display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-size:12px;color:#9A7A5A;">受益人数</div>
+              <div style="font-size:26px;font-weight:700;color:#FF6B35;margin-top:2px;">62 人</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:12px;color:#9A7A5A;">派对状态</div>
+              <div style="font-size:26px;font-weight:700;color:#FF6B35;margin-top:2px;">准备就绪</div>
+            </div>
+          </div>
+          <div style="margin-top:10px;font-size:12px;color:#999;line-height:1.6;">
+            * 本分析只记录为天乐准备生日的心意，不做量化计算 ✨
+          </div>
+        </div>
+      `;
+      createCardMessage(html, '商业分析 · 派对筹备分析');
+    }
+
+    // ================= ZCode - 代码块 =================
+    function renderZCode() {
+      const code = `<!DOCTYPE html>
+<html>
+<head>
+  <title>Happy Birthday 天乐</title>
+  <style>
+    body { display:flex; justify-content:center;
+           align-items:center; height:100vh;
+           background:linear-gradient(135deg,#FFF5E6,#FFE9D6); }
+    .cake { font-size:80px; animation:bounce 1s infinite; }
+    @keyframes bounce { 50% { transform:translateY(-12px); } }
+    h1 { font-family:serif; color:#FF6B35; }
+  </style>
+</head>
+<body>
+  <div style="text-align:center">
+    <div class="cake">🎂</div>
+    <h1>Happy Birthday, 天乐!</h1>
+    <p>愿你今年所有的愿望都实现</p>
+  </div>
+</body>
+</html>`;
+
+      const escaped = code
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+
+      const html = `
+        <div style="background:#1E1E1E;border-radius:14px;overflow:hidden;">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:#252526;border-bottom:1px solid #333;">
+            <div style="display:flex;gap:6px;">
+              <span style="width:12px;height:12px;border-radius:50%;background:#FF5F57;display:inline-block;"></span>
+              <span style="width:12px;height:12px;border-radius:50%;background:#FEBC2E;display:inline-block;"></span>
+              <span style="width:12px;height:12px;border-radius:50%;background:#28C840;display:inline-block;"></span>
+            </div>
+            <div style="font-size:12px;color:#AAA;font-family:monospace;">birthday-card.html</div>
+            <div style="font-size:11px;color:#666;">HTML</div>
+          </div>
+          <pre style="padding:16px;margin:0;overflow-x:auto;font-family:'SF Mono',Consolas,monospace;font-size:12px;line-height:1.7;color:#D4D4D4;max-height:300px;"><code>${escaped}</code></pre>
+          <div style="padding:10px 16px;background:#252526;border-top:1px solid #333;display:flex;justify-content:space-between;align-items:center;font-size:12px;">
+            <span style="color:#AAA;">✓ 已生成 · ${code.split('\n').length} 行 · 无语法错误</span>
+            <span style="color:#28C840;">可以分享给天乐啦 🎂</span>
+          </div>
+        </div>
+      `;
+      createCardMessage(html, 'ZCode · 生日贺卡代码');
+    }
+
+    // ================= API - JSON 响应 =================
+    function renderAPIResponse() {
+      const html = `
+        <div style="background:#0D1117;border-radius:14px;overflow:hidden;font-family:'SF Mono',Consolas,monospace;">
+          <div style="padding:10px 16px;background:#161B22;border-bottom:1px solid #30363D;display:flex;justify-content:space-between;align-items:center;font-size:12px;">
+            <span style="color:#7CA5FF;">POST /api/v1/birthday/greet</span>
+            <span style="color:#3FB950;">200 OK · 62ms</span>
+          </div>
+          <pre style="padding:16px;margin:0;font-size:13px;line-height:1.7;color:#C9D1D9;overflow-x:auto;"><code>{
+  <span style="color:#7CA5FF;">"status"</span>: <span style="color:#A5D6FF;">200</span>,
+  <span style="color:#7CA5FF;">"to"</span>: <span style="color:#A5D6FF;">"杨天乐"</span>,
+  <span style="color:#7CA5FF;">"from"</span>: <span style="color:#A5D6FF;">"计62 × GLM-5.3"</span>,
+  <span style="color:#7CA5FF;">"message"</span>: <span style="color:#A5D6FF;">"Happy Birthday!"</span>,
+  <span style="color:#7CA5FF;">"cake"</span>: <span style="color:#A5D6FF;">"🍰 ready"</span>,
+  <span style="color:#7CA5FF;">"classmates"</span>: <span style="color:#F69D50;">62</span>,
+  <span style="color:#7CA5FF;">"wishes"</span>: [
+    <span style="color:#A5D6FF;">"代码不报错"</span>,
+    <span style="color:#A5D6FF;">"头发浓密"</span>,
+    <span style="color:#A5D6FF;">"GPA 飙升"</span>,
+    <span style="color:#A5D6FF;">"天天开心"</span>
+  ]
+}</code></pre>
+        </div>
+      `;
+      createCardMessage(html, 'API · 生日问候接口响应');
+    }
+
+    // ================= 定时任务 =================
+    function renderTaskCard() {
+      const html = `
+        <div style="background:#fff;border-radius:14px;padding:16px;border:1px solid #EEE;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;font-size:14px;font-weight:600;color:#333;">
+            <span style="font-size:18px;">⏰</span> 定时任务 · 已启用
+          </div>
+          <div style="display:flex;gap:12px;padding:12px;background:#F8F9FB;border-radius:10px;margin-bottom:10px;">
+            <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#FFE4A0,#FFC46B);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">🎂</div>
+            <div style="flex:1;min-width:0;">
+              <div style="font-size:14px;font-weight:600;color:#222;">为杨天乐庆生</div>
+              <div style="font-size:12px;color:#888;margin-top:2px;">每年 · 10月29日 · 00:00</div>
+              <div style="font-size:11px;color:#4CAF50;margin-top:4px;">● 下次触发：今天 00:00（已触发）</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <div style="flex:1;padding:10px;background:#FFF5E6;border-radius:8px;text-align:center;">
+              <div style="font-size:18px;font-weight:700;color:#FF9F43;">62</div>
+              <div style="font-size:11px;color:#9A7A5A;">次祝福已发送</div>
+            </div>
+            <div style="flex:1;padding:10px;background:#F0F9F4;border-radius:8px;text-align:center;">
+              <div style="font-size:18px;font-weight:700;color:#4CAF50;">✓</div>
+              <div style="font-size:11px;color:#6A8A6E;">今年未错过</div>
+            </div>
+          </div>
+        </div>
+      `;
+      createCardMessage(html, '定时任务 · 每年为天乐庆生');
+    }
+
+    // ================= 云盘相册 =================
+    function renderAlbumGrid() {
+      const albums = [
+        { emoji: '🎂', label: '蛋糕时刻', color: '#FFF5E6' },
+        { emoji: '🎁', label: '礼物开箱', color: '#FFE9E9' },
+        { emoji: '🎈', label: '气球派对', color: '#E9F5FF' },
+        { emoji: '📸', label: '合影留念', color: '#F0FFE9' },
+        { emoji: '🕯️', label: '许愿瞬间', color: '#F5E9FF' },
+        { emoji: '🥳', label: '全班庆祝', color: '#FFF9E6' }
+      ];
+      const grid = albums.map(a => `
+        <div style="background:${a.color};border-radius:12px;padding:14px 8px;text-align:center;cursor:pointer;transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+          <div style="font-size:26px;margin-bottom:6px;">${a.emoji}</div>
+          <div style="font-size:12px;color:#555;">${a.label}</div>
+        </div>
+      `).join('');
+
+      const html = `
+        <div style="background:#fff;border-radius:14px;padding:16px;border:1px solid #EEE;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+            <div style="display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:#333;">
+              <span style="font-size:18px;">☁️</span> 云盘 · 杨天乐的生日相册
+            </div>
+            <div style="font-size:12px;color:#888;">共 62 张</div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">${grid}</div>
+          <div style="margin-top:12px;text-align:center;font-size:12px;color:#AAA;">
+            点击任意相册即可查看天乐的专属回忆 📸
+          </div>
+        </div>
+      `;
+      createCardMessage(html, '云盘 · 生日相册');
+    }
+
+    // ================= 附件卡片 =================
+    function renderAttachmentCard() {
+      const html = `
+        <div style="background:#fff;border-radius:14px;padding:16px;border:1px solid #EEE;">
+          <div style="font-size:14px;color:#333;font-weight:600;margin-bottom:12px;">📎 已添加附件（2 个）</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#FFF8E6;border-radius:10px;">
+              <div style="font-size:22px;">🍰</div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:13px;color:#333;font-weight:500;">生日蛋糕.bmp</div>
+                <div style="font-size:11px;color:#999;">2.4 MB · 由计62庆生委员会提供</div>
+              </div>
+              <div style="font-size:11px;color:#4CAF50;">✓ 已就位</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#F0F9FF;border-radius:10px;">
+              <div style="font-size:22px;">🎁</div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:13px;color:#333;font-weight:500;">礼物清单.txt</div>
+                <div style="font-size:11px;color:#999;">1.2 KB · 62 位同学各写了一句祝福</div>
+              </div>
+              <div style="font-size:11px;color:#4CAF50;">✓ 已就位</div>
+            </div>
+          </div>
+        </div>
+      `;
+      createCardMessage(html, '附件 · 生日礼物');
+    }
+
+    // ================= 项目卡片 =================
+    function renderProjectCard() {
+      const html = `
+        <div style="background:linear-gradient(135deg,#FFF5E6,#FFE9D6);border-radius:14px;padding:18px;border:1px solid #F5D9B8;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+            <div style="width:40px;height:40px;border-radius:10px;background:#FFB84D;display:flex;align-items:center;justify-content:center;font-size:22px;">🎈</div>
+            <div>
+              <div style="font-size:15px;font-weight:600;color:#5A3A1A;">杨天乐的生日惊喜计划</div>
+              <div style="font-size:12px;color:#9A7A5A;">Project · 已创建 · 协作中</div>
+            </div>
+          </div>
+          <div style="background:#fff;border-radius:10px;padding:12px;font-size:12px;color:#666;line-height:1.7;">
+            <div style="margin-bottom:6px;">✅ 蛋糕预订（已完成）</div>
+            <div style="margin-bottom:6px;">✅ 教室布置（已完成）</div>
+            <div style="margin-bottom:6px;">🔄 惊喜视频剪辑（进行中）</div>
+            <div>⏳ 惊喜开场（今早）</div>
+          </div>
+          <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center;font-size:12px;">
+            <span style="color:#9A7A5A;">参与协作：62 位同学</span>
+            <span style="color:#FF6B35;font-weight:600;">进度 75%</span>
+          </div>
+        </div>
+      `;
+      createCardMessage(html, '项目 · 生日惊喜计划');
+    }
+
+    // ================= 通用信息卡片 =================
+    function renderInfoCard(title, icon, contentHTML, bgColor = '#F8F9FB') {
+      const html = `
+        <div style="background:${bgColor};border-radius:14px;padding:16px;border:1px solid rgba(0,0,0,0.05);">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:14px;font-weight:600;color:#333;">
+            <span style="font-size:18px;">${icon}</span> ${title}
+          </div>
+          <div style="font-size:13px;color:#555;line-height:1.75;">${contentHTML}</div>
+        </div>
+      `;
+      createCardMessage(html, title);
+    }
+
+    // ================= 普通聊天消息（流式） =================
+    function createAssistantMessage(htmlContent, onDone) {
+      switchToChatMode();
+      const wrapper = document.createElement('div');
+      wrapper.className = 'message assistant';
+
+      const think = document.createElement('div');
+      think.className = 'thinking-process';
+      think.innerHTML = `
+        <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7z"/><line x1="9" y1="21" x2="15" y2="21"/></svg>
+        思考过程
+        <svg viewBox="0 0 24 24" style="width: 12px; height: 12px; margin-left: 2px;"><polyline points="9 18 15 12 9 6"/></svg>
+      `;
+      const thinkContent = document.createElement('div');
+      thinkContent.className = 'thinking-content';
+      thinkContent.innerHTML = isBirthdayToday()
+        ? `正在识别杨天乐的生日请求... 开始生成祝福语模块... 已加载计62庆生委员会数据库 ✓`
+        : `zzz......`;
+      think.addEventListener('click', () => {
+        think.classList.toggle('open');
+        thinkContent.classList.toggle('show');
+      });
+
+      const content = document.createElement('div');
+      content.className = 'assistant-content';
+
+      wrapper.appendChild(think);
+      wrapper.appendChild(thinkContent);
+      wrapper.appendChild(content);
+      chatArea.appendChild(wrapper);
+      scrollToBottom();
+
+      let actionsAttached = false;
+
+      function attachActions() {
+        if (actionsAttached) return;
+        actionsAttached = true;
+
+        const actions = document.createElement('div');
+        actions.className = 'action-bar';
+        actions.innerHTML = `
+          <button class="action-icon" title="复制" data-action="copy">
+            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+          <button class="action-icon" title="重新生成" data-action="regen">
+            <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          </button>
+        `;
+        wrapper.appendChild(actions);
+        scrollToBottom();
+
+        actions.querySelector('[data-action="copy"]').addEventListener('click', () => {
+          navigator.clipboard.writeText(content.innerText).then(() => {
+            showToast('已复制！');
+          }).catch(() => showToast('复制失败，请手动选择文本 😅'));
+        });
+
+        actions.querySelector('[data-action="regen"]').addEventListener('click', () => {
+          actions.remove();
+          actionsAttached = false;
+
+          // 非 10 月 29 日：重新生成也只有 zzz......
+          if (!isBirthdayToday()) {
+            showToast('重新生成了一条回复 💤');
+            typeHTML(content, NON_BIRTHDAY_REPLY, { onDone: attachActions });
+            return;
+          }
+
+          const reply = BIRTHDAY_MESSAGES[birthdayIndex % BIRTHDAY_MESSAGES.length];
+          birthdayIndex++;
+          const newHtml = `<p>${reply}</p><p>那有什么我可以帮你的吗？无论是写文档、画图表、写代码还是搜索，随时告诉我！</p>`;
+          showToast('重新生成了一条生日祝福 🎉');
+          typeHTML(content, newHtml, { onDone: attachActions });
+        });
+
+        if (onDone) onDone();
+      }
+
+      typeHTML(content, htmlContent, { onDone: attachActions });
+    }
+
+    function createUserMessage(text) {
+      switchToChatMode();
+      const wrapper = document.createElement('div');
+      wrapper.className = 'message user';
+      const bubble = document.createElement('div');
+      bubble.className = 'msg-bubble';
+      bubble.textContent = text;
+      wrapper.appendChild(bubble);
+      chatArea.appendChild(wrapper);
+      scrollToBottom();
+    }
+
+    function createTypingIndicator() {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'message assistant';
+      wrapper.innerHTML = `<div class="typing-dots"><span></span><span></span><span></span></div>`;
+      chatArea.appendChild(wrapper);
+      scrollToBottom();
+      return wrapper;
+    }
+
+    function handleSend() {
+      const text = userInput.value.trim();
+      if (!text || isTyping) return;
+
+      userInput.value = '';
+      userInput.style.height = 'auto';
+      sendBtn.disabled = true;
+      inputPill.classList.remove('has-text');
+
+      createUserMessage(text);
+      isTyping = true;
+      const typingMsg = createTypingIndicator();
+
+      setTimeout(() => {
+        typingMsg.remove();
+
+        const finish = () => {
+          isTyping = false;
+          sendBtn.disabled = false;
+          userInput.focus();
+          scrollToBottom();
+        };
+
+        // 非 10 月 29 日：仿真大模型只输出 zzz......
+        if (!isBirthdayToday()) {
+          createAssistantMessage(NON_BIRTHDAY_REPLY, finish);
+          return;
+        }
+
+        const reply = BIRTHDAY_MESSAGES[birthdayIndex % BIRTHDAY_MESSAGES.length];
+        birthdayIndex++;
+
+        if (isBirthdayRelated(text)) {
+          createAssistantMessage(
+            `<p>${reply}</p><p>那有什么我可以帮你的吗？无论是写文档、画图表、写代码还是搜索，随时告诉我！</p>`,
+            finish
+          );
+        } else {
+          createAssistantMessage(
+            `<p>收到啦！不过今天的主角是杨天乐同学 🎂</p><p>${reply}</p><p>要不要试试输入「生日快乐」或者「杨天乐」？我会给你准备更棒的生日惊喜～</p>`,
+            finish
+          );
+        }
+      }, 800);
+    }
+
+    // ================= 移动端侧边栏抽屉 =================
+    const sidebarEl = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+
+    function isMobileLayout() {
+      return window.matchMedia('(max-width: 900px)').matches;
+    }
+
+    function openMobileSidebar() {
+      sidebarEl.classList.add('mobile-open');
+      sidebarOverlay.classList.add('show');
+    }
+
+    function closeMobileSidebar() {
+      sidebarEl.classList.remove('mobile-open');
+      sidebarOverlay.classList.remove('show');
+    }
+
+    mobileMenuBtn.addEventListener('click', openMobileSidebar);
+    sidebarOverlay.addEventListener('click', closeMobileSidebar);
+
+    // 移动端点击侧边栏内的入口后自动收起抽屉
+    sidebarEl.addEventListener('click', (e) => {
+      if (!isMobileLayout()) return;
+      if (e.target.closest('.nav-item, .recent-item, .sidebar-footer')) {
+        closeMobileSidebar();
+      }
+    });
+
+    // 窗口尺寸变化时清理抽屉状态
+    window.addEventListener('resize', () => {
+      if (!isMobileLayout()) closeMobileSidebar();
+    });
+
+    // ================= 事件绑定 =================
+
+    document.getElementById('sidebarToggle').addEventListener('click', () => {
+      if (isMobileLayout()) {
+        closeMobileSidebar();
+      } else {
+        sidebarEl.classList.toggle('collapsed');
+      }
+    });
+
+    document.getElementById('navHome').addEventListener('click', () => {
+      welcomeScreen.style.display = 'flex';
+      welcomeScreen.scrollTop = 0;
+      chatArea.classList.remove('active');
+      chatArea.innerHTML = '';
+
+      document.querySelectorAll('.recent-item').forEach(i => i.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+      document.getElementById('navHome').classList.add('active');
+
+      showToast(isBirthdayToday() ? '已回到主页，继续为天乐庆生吧 🎂' : '已回到主页 ✨');
+    });
+
+    // 处理侧边栏“最近会话”的点击
+    document.querySelectorAll('.recent-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        if (e.target.closest('.item-actions')) {
+          showToast('会话操作菜单（模拟）');
+          return;
+        }
+
+        document.querySelectorAll('.recent-item').forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+        document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+
+        const topic = item.dataset.topic;
+        chatArea.innerHTML = '';
+        if (topic === 'party') renderPartySite();
+        else if (topic === 'poem') renderPoem();
+        else if (topic === 'insight') renderDataInsight();
+      });
+    });
+
+    document.getElementById('navTask').addEventListener('click', () => {
+      renderTaskCard();
+    });
+
+    document.getElementById('navCloud').addEventListener('click', () => {
+      renderAlbumGrid();
+    });
+
+    document.getElementById('projectToggle').addEventListener('click', () => {
+      renderProjectCard();
+    });
+
+    document.getElementById('navNewProject').addEventListener('click', () => {
+      renderProjectCard();
+    });
+
+    document.getElementById('navSettings').addEventListener('click', () => {
+      renderInfoCard(
+        '账户设置 · 生日特权',
+        '⚙️',
+        `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #eee;">
+           <span>当前账户</span><span style="color:#333;font-weight:500;">旅行者1019</span>
+         </div>
+         <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #eee;">
+           <span>生日特权</span><span style="color:#FF6B35;font-weight:600;">已激活 🎂</span>
+         </div>
+         <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #eee;">
+           <span>今日特权</span><span style="color:#333;font-weight:500;">天乐最大</span>
+         </div>
+         <div style="display:flex;justify-content:space-between;padding:6px 0;">
+           <span>蛋糕额度</span><span style="color:#FF6B35;font-weight:600;">无限 🍰</span>
+         </div>`,
+        '#FFF8E6'
+      );
+    });
+
+    document.getElementById('btnZCode').addEventListener('click', () => {
+      renderZCode();
+    });
+
+    document.getElementById('btnAPI').addEventListener('click', () => {
+      renderAPIResponse();
+    });
+
+    document.getElementById('projectSelect').addEventListener('click', () => {
+      document.getElementById('projectSelectText').textContent = '杨天乐的生日惊喜计划 🎈';
+      renderProjectCard();
+    });
+
+    document.getElementById('addAttachmentBtn').addEventListener('click', () => {
+      renderAttachmentCard();
+    });
+
+    // 底部链接
+    const footerHandlers = {
+      footerLink: () => renderInfoCard(
+        '计62生日特别备案',
+        '📋',
+        `<div style="line-height:1.9;">
+           <div>备案编号：<b style="color:#FF6B35;">JZ62-BD-1028</b></div>
+           <div>备案日期：10 月 29 日</div>
+           <div>备案内容：<b>今天天乐最大</b>，一切事务无条件通过。</div>
+           <div style="margin-top:6px;font-size:12px;color:#888;">备案状态：<span style="color:#4CAF50;">✓ 已生效</span></div>
+         </div>`,
+        '#E9F5FF'
+      ),
+      footerLink2: () => renderInfoCard(
+        '天乐的代码成长博客',
+        '📖',
+        `<div style="line-height:1.9;">
+           <div style="font-weight:600;color:#333;margin-bottom:4px;">最新文章 · 2025 生日特辑</div>
+           <div style="color:#666;">《我在计62这一年：从 Hello World 到生日快乐》</div>
+           <div style="margin-top:6px;font-size:12px;color:#888;">阅读量 <b style="color:#FF6B35;">6,262</b> · 点赞 <b style="color:#FF6B35;">620</b></div>
+         </div>`,
+        '#F0F9FF'
+      ),
+      footerLink3: () => renderInfoCard(
+        '联系计62庆生委员会',
+        '🎈',
+        `<div style="line-height:1.9;">
+           <div>📮 联系方式：飞书群「杨天乐生日惊喜作战群」</div>
+           <div>👥 成员：62 位（含 1 位寿星）</div>
+           <div>📊 已就位：蛋糕 ✓ / 礼物 ✓ / 气球 ✓</div>
+           <div style="margin-top:6px;font-size:12px;color:#888;">状态：<span style="color:#4CAF50;">全部准备完成 🎉</span></div>
+         </div>`,
+        '#FFF5E6'
+      ),
+      footerLink4: () => renderInfoCard(
+        '吃蛋糕协议',
+        '🍰',
+        `<div style="line-height:1.9;">
+           <div>第一条：今天必须吃两块蛋糕。</div>
+           <div>第二条：蛋糕上的樱桃归天乐所有。</div>
+           <div>第三条：不许抢蜡烛许愿。</div>
+           <div>第四条：<b style="color:#FF6B35;">所有规则最终解释权归天乐所有。</b></div>
+           <div style="margin-top:6px;font-size:12px;color:#888;">协议状态：<span style="color:#4CAF50;">✓ 已签署 62/62</span></div>
+         </div>`,
+        '#FFF0F5'
+      ),
+      footerLink5: () => renderInfoCard(
+        '惊喜保密政策',
+        '🤫',
+        `<div style="line-height:1.9;">
+           <div>保密期限：今日派对开始前</div>
+           <div>保密内容：惊喜视频 / 生日蛋糕 / 全体合照</div>
+           <div>已签署人数：<b style="color:#FF6B35;">61 / 62</b></div>
+           <div style="margin-top:6px;font-size:12px;color:#C62828;">⚠ 注意：天乐本人不得签署此协议。</div>
+         </div>`,
+        '#F5F3FF'
+      )
+    };
+    Object.keys(footerHandlers).forEach(id => {
+      document.getElementById(id).addEventListener('click', (e) => {
+        e.preventDefault();
+        footerHandlers[id]();
+      });
+    });
+
+    // 卡片
+    document.getElementById('card1').addEventListener('click', () => renderPartySite());
+    document.getElementById('card2').addEventListener('click', () => renderPoem());
+    document.getElementById('card3').addEventListener('click', () => renderDataInsight());
+    document.getElementById('card4').addEventListener('click', () => renderBusinessAnalysis());
+    document.getElementById('card5').addEventListener('click', () => renderInspirationBoard());
+
+    // 输入框
+    userInput.addEventListener('input', () => {
+      userInput.style.height = 'auto';
+      userInput.style.height = Math.min(userInput.scrollHeight, 200) + 'px';
+      if (userInput.value.trim()) {
+        inputPill.classList.add('has-text');
+        sendBtn.disabled = false;
+      } else {
+        inputPill.classList.remove('has-text');
+        sendBtn.disabled = true;
+      }
+    });
+
+    userInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        handleSend();
+      }
+    });
+
+    sendBtn.addEventListener('click', handleSend);
+
+    // 模型下拉
+    document.getElementById('modelBtn').addEventListener('click', (e) => {
+      e.stopPropagation();
+      modelDropdown.classList.toggle('show');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!modelDropdown.contains(e.target) && !document.getElementById('modelBtn').contains(e.target)) {
+        modelDropdown.classList.remove('show');
+      }
+    });
+
+    document.querySelectorAll('.model-select').forEach(item => {
+      item.addEventListener('click', () => {
+        document.querySelectorAll('.model-select').forEach(i => i.classList.remove('selected'));
+        item.classList.add('selected');
+        const model = item.dataset.model;
+        const birthdayMsg = item.dataset.birthday;
+        currentModelName.textContent = model;
+        modelDropdown.classList.remove('show');
+        renderInfoCard(
+          `模型切换 · ${model}`,
+          '🧠',
+          `<div style="line-height:1.9;">
+             <div>${birthdayMsg}</div>
+             <div style="margin-top:6px;font-size:12px;color:#888;">
+               <span style="color:#4CAF50;">✓</span> 已切换 · 回复风格自动更新
+             </div>
+           </div>`,
+          '#E9F5FF'
+        );
+      });
+    });
+
+    // 思考强度滑块
+    const STRENGTH_LEVELS = ['低', '中', '高', '最高'];
+    const STRENGTH_POSITIONS = [0, 33.33, 66.67, 100];
+
+    function setStrength(level) {
+      currentStrength = level;
+      sliderFill.style.width = STRENGTH_POSITIONS[level - 1] + '%';
+      sliderThumb.style.left = STRENGTH_POSITIONS[level - 1] + '%';
+      strengthText.textContent = STRENGTH_LEVELS[level - 1];
+    }
+
+    strengthSlider.addEventListener('click', (e) => {
+      const rect = strengthSlider.getBoundingClientRect();
+      const percent = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      const level = Math.round(percent * 3) + 1;
+      setStrength(level);
+      showToast(isBirthdayToday()
+        ? `思考强度已设为「${STRENGTH_LEVELS[level - 1]}」· 生日祝福浓度 ${level * 25}% 🎂`
+        : `思考强度已设为「${STRENGTH_LEVELS[level - 1]}」`);
+    });
+
+    setStrength(4);
+
+    // ================= 非生日日期的 UI 中性化处理 =================
+    function applyNonBirthdayUI() {
+      if (isBirthdayToday()) return;
+
+      /* 1. 文档标题 */
+      document.title = 'Z.ai';
+
+      /* 2. favicon：去掉生日帽，只留纯 Z logo */
+      const plainFavicon = "data:image/svg+xml," + encodeURIComponent(
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">' +
+          '<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">' +
+            '<stop offset="11%" stop-color="#191a1d"/>' +
+            '<stop offset="96%" stop-color="#747689"/>' +
+          '</linearGradient></defs>' +
+          '<rect x="2" y="2" width="60" height="60" rx="13" fill="url(#g)"/>' +
+          '<path d="M18 18H46V25L25 41H46V48H18V41L39 25H18Z" fill="white"/>' +
+        '</svg>'
+      );
+      const favLink = document.querySelector('link[rel="icon"]');
+      if (favLink) favLink.setAttribute('href', plainFavicon);
+
+      /* 3. 侧边栏「定时任务」上的 🎂 徽章 */
+      const badge = document.querySelector('#navTask .nav-badge');
+      if (badge) badge.remove();
+
+      /* 4. 欢迎副标题：清除生日文案 */
+      const subtitle = document.querySelector('.welcome-subtitle');
+      if (subtitle) subtitle.textContent = '今天也来写点什么吧 ✨';
+
+      /* 5. 用户头像 🎂 → 👤 */
+      const avatar = document.querySelector('.sidebar-footer .avatar');
+      if (avatar) avatar.textContent = '👤';
+
+      /* 6. 输入框 placeholder */
+      if (userInput) userInput.placeholder = '有什么想聊的，输入试试...';
+
+      /* 7. 附件按钮 title */
+      const attachBtn = document.getElementById('addAttachmentBtn');
+      if (attachBtn) attachBtn.title = '添加附件';
+
+      /* 8. 模型下拉里的 data-birthday 中性化 */
+      const neutralModelDescs = {
+        'GLM-5.3-Flash': '⚡ 快速响应模式：适合轻量对话与生成',
+        'GLM-5.3':       '🧠 深度思考模式：适合复杂推理与长内容',
+        'GLM-5.2':       '🎈 经典模式：稳定、可靠、简洁'
+      };
+      document.querySelectorAll('.model-select').forEach(item => {
+        const m = item.dataset.model;
+        if (neutralModelDescs[m]) item.dataset.birthday = neutralModelDescs[m];
+      });
+
+      /* 9. 最近会话：改成通用名称 + 中性提示 */
+      const recentTitles = ['示例会话 A', '示例会话 B', '示例会话 C'];
+      const recentTips   = ['示例会话 A：功能开发中', '示例会话 B：功能开发中', '示例会话 C：功能开发中'];
+      document.querySelectorAll('#recentList .recent-item').forEach((item, i) => {
+        const titleEl = item.querySelector('.item-title');
+        if (titleEl && recentTitles[i]) titleEl.textContent = recentTitles[i];
+        const fresh = item.cloneNode(true);
+        item.replaceWith(fresh);
+        fresh.addEventListener('click', (e) => {
+          if (e.target.closest('.item-actions')) {
+            showToast('会话操作菜单（模拟）');
+            return;
+          }
+          showToast(recentTips[i] || '功能开发中');
+        });
+      });
+
+      /* 10. 底部说明文字 */
+      const footerHint = document.querySelector('.footer > span:first-of-type');
+      if (footerHint) footerHint.textContent = '内容由 AI 生成，请注意甄别。';
+
+      /* 11. 底部链接：改名 + 中性提示 */
+      const footerMap = [
+        ['footerLink',  '服务条款',    '服务条款（演示版暂未开放）'],
+        ['footerLink2', '帮助中心',    '帮助中心（演示版暂未开放）'],
+        ['footerLink3', '联系我们',    '联系我们：support@z.ai'],
+        ['footerLink4', '隐私政策',    '隐私政策（演示版暂未开放）'],
+        ['footerLink5', 'Cookie 政策', 'Cookie 政策（演示版暂未开放）']
+      ];
+      footerMap.forEach(([id, text, tip]) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.textContent = text;
+        const fresh = el.cloneNode(true);
+        el.replaceWith(fresh);
+        fresh.addEventListener('click', (e) => {
+          e.preventDefault();
+          showToast(tip);
+        });
+      });
+
+      /* 12. 侧边栏「主页」：替换为中性 toast */
+      const navHome = document.getElementById('navHome');
+      if (navHome) {
+        const fresh = navHome.cloneNode(true);
+        navHome.replaceWith(fresh);
+        fresh.addEventListener('click', () => {
+          welcomeScreen.style.display = 'flex';
+          welcomeScreen.scrollTop = 0;
+          chatArea.classList.remove('active');
+          chatArea.innerHTML = '';
+          document.querySelectorAll('.recent-item').forEach(i => i.classList.remove('active'));
+          document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+          fresh.classList.add('active');
+          showToast('已回到主页 ✨');
+        });
+      }
+
+      /* 13. 项目选择：重置文本，并改为中性提示 */
+      const projectSelect = document.getElementById('projectSelect');
+      if (projectSelect) {
+        const fresh = projectSelect.cloneNode(true);
+        projectSelect.replaceWith(fresh);
+        const projectText = document.getElementById('projectSelectText');
+        if (projectText) projectText.textContent = '选择项目';
+        fresh.addEventListener('click', () => {
+          showToast('项目管理（演示版暂未开放）');
+        });
+      }
+    }
+
+    applyNonBirthdayUI();
+  </script>
+</body>
+</html>
