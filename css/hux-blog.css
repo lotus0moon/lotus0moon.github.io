@@ -654,6 +654,12 @@ pre.highlight {
 .search-icon-close {
   font-size: 16px;
 }
+*:focus {
+  outline: none !important;
+}
+*:focus-visible {
+  outline: none !important;
+}
 body {
   /* Hux learn from
      *     TypeIsBeautiful,
