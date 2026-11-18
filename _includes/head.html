@@ -1,8 +1,10 @@
 <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="google-site-verification"
+        content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="description" content="{{ site.description }}" />
     <meta name="keywords" content="{{ site.keyword }}" />
     <meta name="theme-color" content="{{ site.chrome-tab-theme-color }}" />
@@ -13,9 +15,11 @@
     {% case page.layout %}
     {% when 'post' %}
     <meta property="og:type" content="article" />
-    <meta property="og:description" content="{{ page.excerpt | strip_html | truncate:200 }}" />
+    <meta property="og:description"
+        content="{{ page.excerpt | strip_html | truncate:200 }}" />
     {% if page.date %}
-    <meta property="article:published_time" content="{{ page.date | date: " %Y-%m-%dT%H:%M:%SZ" }}" />
+    <meta property="article:published_time" content="{{ page.date | date: "
+        %Y-%m-%dT%H:%M:%SZ" }}" />
     {% endif %}
     {% if page.author %}
     <meta property="article:author" content="{{ page.author }}" />
@@ -28,11 +32,13 @@
     <meta property="og:description"
         content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}" />
     {% endcase %}
-    <meta property="og:image" content="{{ site.url }}{{ site.sidebar-avatar }}" />
+    <meta property="og:image"
+        content="{{ site.url }}{{ site.sidebar-avatar }}" />
     <meta property="og:url" content="{{ site.url }}{{ page.url }}" />
     <meta property="og:site_name" content="{{ site.SEOTitle }}" />
 
-    <title>{% if page.title %}{{ page.title }} - {{ site.SEOTitle }}{% else %}{{ site.SEOTitle }}{% endif %}</title>
+    <title>{% if page.title %}{{ page.title }} - {{ site.SEOTitle }}{% else %}{{
+        site.SEOTitle }}{% endif %}</title>
 
     <!-- Web App Manifest -->
     <link rel="manifest" href="{{ site.baseurl }}/pwa/manifest.json">
@@ -41,35 +47,44 @@
     <link rel="shortcut icon" href="{{ site.baseurl }}{{ site.favicon }}">
     <!-- search -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
+        rel="stylesheet">
 
     <!-- Canonical URL -->
-    <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+    <link rel="canonical"
+        href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="{{ " /min.css/bootstrap.min.css" | prepend: site.baseurl }}">
+    <link rel="stylesheet" href="{{ " /min.css/bootstrap.min.css" | prepend:
+        site.baseurl }}">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ " /min.css/hux-blog.min.css" | prepend: site.baseurl }}">
+    <link rel="stylesheet" href="{{ " /min.css/hux-blog.min.css" | prepend:
+        site.baseurl }}">
 
     <!-- Custom Fonts -->
     <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
 
     <!-- Lbx change font-awesome CDN to qiniu -->
-    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"
-        type="text/css">
+    <!-- <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"
+        type="text/css"> -->
 
+    <!-- Lotus Moon updates font-awsome to v7.3.1 -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css"
+        integrity="sha512-QeR2VH+lsBE5LSAe1Q5EnTBbe7XTBubt8dG93Y7gidSgdMCr8nVqKcfKAMyN96SV8KDbZVTDXChatu5G2KQGzg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
 
+    <!-- things below are moved from footer.html - by Lotus Moon 2026.8.15 -->
 
-<!-- things below are moved from footer.html - by Lotus Moon 2026.8.15 -->
+    <!-- Global scripts -->
 
-<!-- Global scripts -->
-    
     <!-- lazyload -->
-    <script async src='{{ " /min.js/lazysizes.min.js " | prepend: site.baseurl }}'></script>
+    <script async
+        src='{{ " /min.js/lazysizes.min.js " | prepend: site.baseurl }}'></script>
 
     <!-- busuanzi -->
-    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <script src="//cdn.busuanzi.cc/busuanzi/3.6.9/busuanzi.min.js"
+        defer></script>
 
     <!-- Baidu Tongji -->
     {% if site.ba_track_id %}
@@ -79,26 +94,31 @@
     </script>
     {% endif %}
 
-
     <!-- add "defer" to optimise the loading of scripts and code appearance - by Lotus Moon 2026.8.15 -->
 
     <!-- jQuery -->
-    <script defer src='{{ " /min.js/jquery.min.js " | prepend: site.baseurl }}'></script>
+    <script defer
+        src='{{ " /min.js/jquery.min.js " | prepend: site.baseurl }}'></script>
 
     <!-- Bootstrap Core JavaScript -->
     <!-- Currently, only navbar scroll-down effect at desktop still depends on this -->
-    <script defer src='{{ " /min.js/bootstrap.min.js " | prepend: site.baseurl }}'></script>
+    <script defer
+        src='{{ " /min.js/bootstrap.min.js " | prepend: site.baseurl }}'></script>
 
     <!-- Custom Theme JavaScript -->
-    <script defer src='{{ " /min.js/hux-blog.min.js " | prepend: site.baseurl }}'></script>
+    <script defer
+        src='{{ " /min.js/hux-blog.min.js " | prepend: site.baseurl }}'></script>
 
     <!-- Simple Jekyll Search -->
-    <script defer src='{{ " /min.js/simple-jekyll-search.min.js" | prepend: site.baseurl }}'></script>
+    <script defer
+        src='{{ " /min.js/simple-jekyll-search.min.js" | prepend: site.baseurl }}'></script>
 
     <!-- Service Worker -->
     {% if site.service-worker %}
-    <script defer src='{{ " /min.js/snackbar.min.js " | prepend: site.baseurl }}'></script>
-    <script defer src='{{ " /min.js/sw-registration.min.js " | prepend: site.baseurl }}'></script>
+    <script defer
+        src='{{ " /min.js/snackbar.min.js " | prepend: site.baseurl }}'></script>
+    <script defer
+        src='{{ " /min.js/sw-registration.min.js " | prepend: site.baseurl }}'></script>
     {% endif %}
 
     {% if page.plchart %}
@@ -121,10 +141,10 @@
     </script>
     {% endif %}
 
-
     {% if page.title == 'Archive' %}
     <!-- jquery.tagcloud.js -->
-    <script defer src='{{ "/min.js/jquery.tagcloud.min.js" | prepend: site.baseurl }}'></script>
+    <script defer
+        src='{{ "/min.js/jquery.tagcloud.min.js" | prepend: site.baseurl }}'></script>
     <script>
         document.addEventListener('DOMContentLoaded',function(){
             $.fn.tagcloud.defaults = {
@@ -134,7 +154,8 @@
             $('#tag_cloud a').tagcloud()
         })
     </script>
-    <script defer src='{{ "/min.js/archive.min.js" | prepend: site.baseurl }}'></script>
+    <script defer
+        src='{{ "/min.js/archive.min.js" | prepend: site.baseurl }}'></script>
     {% endif %}
 
     <!-- Side Catalog -->
@@ -176,7 +197,8 @@
         }))
     })
     </script>
-    <script defer src='{{ "/min.js/jquery.nav.min.js" | prepend: site.baseurl }}'></script>
+    <script defer
+        src='{{ "/min.js/jquery.nav.min.js" | prepend: site.baseurl }}'></script>
     <!-- Doc: https://github.com/davist11/jQuery-One-Page-Nav
     Fork by Hux to support padding -->
     <script>
