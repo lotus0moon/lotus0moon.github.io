@@ -8,20 +8,20 @@
         "type": "git",
         "url": "https://github.com/lotus_0_moon/lotus0moon.github.io"
     },
-    "bugs": "https://github.com/lotus_0_moon/lotus0moon.github.io/issues", 
+    "bugs": "https://github.com/lotus_0_moon/lotus0moon.github.io/issues",
     "scripts": {
         "start": "bundle exec jekyll serve",
         "build": "node build.js",
-        "watch:assets": "chokidar \"less/**/*.less\" \"js/**/*.js\" -c \"npm run build\" --initial",
+        "watch:assets": "node watch.js",
         "dev": "concurrently \"npm run watch:assets\" \"npm run start\"",
         "push": "git push origin master --tag",
         "boil": "git push boilerplate boilerplate:master"
     },
     "devDependencies": {
+        "chokidar": "^6.0.0",
+        "concurrently": "^9.1.2",
         "less": "^4.2.0",
         "less-plugin-clean-css": "^1.5.1",
-        "uglify-js": "^3.17.4",
-        "chokidar-cli": "^3.0.0",
-        "concurrently": "^9.1.2"
+        "uglify-js": "^3.17.4"
     }
 }
